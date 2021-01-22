@@ -1,0 +1,14 @@
+## Interface: 11305
+## Author: Arrila-Thrall (US)
+## Version: 1.0.0-alpha.1
+## Title: |cFF80528CReckless Abandon|r |cFFFFF569Classic|r
+## Notes: A tool for quickly (and recklessly) abandoning quests
+## SavedVariables: RecklessAbandonClassicDB, RecklessAbandonClassicPrivateDB
+## SavedVariablesPerCharacter: RecklessAbandonClassicCharacterDB
+
+Libraries\load.xml
+Locales\load.xml
+init.lua
+Settings\load.xml
+Utils\load.xml
+Core\load.xml
