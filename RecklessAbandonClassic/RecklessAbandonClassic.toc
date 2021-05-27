@@ -1,4 +1,4 @@
-## Interface: 11305
+## Interface: 11307
 ## Author: Arrila-Thrall (US)
 ## Version: 1.0.0-alpha.1
 ## Title: |cFF80528CReckless Abandon|r |cFFFFF569Classic|r

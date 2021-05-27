@@ -24,8 +24,24 @@ E.Options.args.general = {
                     type = "header",
                     name = L["General Settings"]
                 },
-                confirmIndividual = {
+                loginMessage = {
                     order = 1,
+                    type = "toggle",
+                    name = L["Show login message"],
+                    get = function(info)
+                        return E.db.general.loginMessage
+                    end,
+                    set = function(info, value)
+                        E.db.general.loginMessage = value
+                    end
+                },
+                space1 = {
+                    order = 2,
+                    type = "description",
+                    name = ""
+                },
+                confirmIndividual = {
+                    order = 3,
                     name = L["Confirm individual abandon"],
                     desc = L["Prompt for confirmation when abandoning individual quests.\n\n|cFFFF6B6BCaution: Turning this off means a quest will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
@@ -37,7 +53,7 @@ E.Options.args.general = {
                     end
                 },
                 confirmGroup = {
-                    order = 2,
+                    order = 4,
                     name = L["Confirm group abandon"],
                     desc = L["Prompt for confirmation when abandoning multiple quests.\n\n|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
@@ -49,7 +65,7 @@ E.Options.args.general = {
                     end
                 },
                 individualQuests = {
-                    order = 3,
+                    order = 5,
                     type = "group",
                     name = L["Individual Quests"],
                     inline = true,
@@ -69,7 +85,7 @@ E.Options.args.general = {
                     }
                 },
                 zoneQuests = {
-                    order = 4,
+                    order = 6,
                     type = "group",
                     name = L["Zone Quests"],
                     inline = true,
@@ -124,7 +140,7 @@ E.Options.args.general = {
                         local titleFormat = "\n|cFFF2E699%s|r    | %s"
                         local orphanTitleFormat = "\n|cFFF2E699%s|r    | |cFFFF6B6B%s|r"
                         for questId, title in pairs(E.private.exclusions.excludedQuests) do
-                            local orphaned = C_QuestLog.GetLogIndexForQuestID(questId) == nil
+                            local orphaned = GetQuestLogIndexByID(questId) == 0
                             exclusions = exclusions .. format(orphaned and orphanTitleFormat or titleFormat, questId, title)
                         end
                         return exclusions

@@ -17,10 +17,10 @@ local GetSpellInfo = GetSpellInfo
 local GetNumGroupMembers = GetNumGroupMembers
 local GetNumQuestLogEntries = GetNumQuestLogEntries
 local GetQuestLogTitle = GetQuestLogTitle
+local GetQuestLogIndexByID = GetQuestLogIndexByID
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
 local GetAddOnEnableState = GetAddOnEnableState
-local GetQuestLink = GetQuestLink
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
 local IsInRaid = IsInRaid
@@ -50,6 +50,7 @@ E.wowpatch, E.wowbuild = GetBuildInfo()
 E.wowbuild = tonumber(E.wowbuild)
 E.isMacClient = IsMacClient()
 E.isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
 E.questsDisplayed = 6
@@ -58,24 +59,6 @@ local questGroupsByName = {}
 -- TODO: We might want to create custom textures for each type
 local questButtonPool = E:CreateFramePool("Button", QuestLogFrame, "RECKLESS_ABANDON_BUTTON")
 local groupButtonPool = E:CreateFramePool("Button", QuestLogFrame, "RECKLESS_GROUP_ABANDON_BUTTON")
-
-local MyScanningTooltip = CreateFrame("GameTooltip", "MyScanningTooltip", UIParent, "GameTooltipTemplate")
-local QuestTitleFromID =
-	setmetatable(
-	{},
-	{
-		__index = function(t, id)
-			MyScanningTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-			MyScanningTooltip:SetHyperlink("quest:" .. id)
-			local title = MyScanningTooltipTextLeft1:GetText()
-			MyScanningTooltip:Hide()
-			if title and title ~= RETRIEVING_DATA then
-				t[id] = title
-				return title
-			end
-		end
-	}
-)
 
 StaticPopupDialogs["RECKLESS_ABANDON_GROUP_CONFIRMATION"] = {
 	text = L["Are you sure you want to abandon all quests in %s? This cannot be undone."],
@@ -95,7 +78,7 @@ StaticPopupDialogs["RECKLESS_ABANDON_CONFIRMATION"] = {
 	button1 = L["Yes"],
 	button2 = L["No"],
 	OnAccept = function(self, data)
-		E:AbandonQuest(data.questId, data.logIndex)
+		E:AbandonQuest(data.questId)
 	end,
 	timeout = 0,
 	whileDead = true,
@@ -122,7 +105,7 @@ local function getKey(value)
 	end
 end
 
-local function RenderAbandonButton(parent, offset, questId, logIndex, excluded, title, tooltip)
+local function RenderAbandonButton(parent, offset, questId, excluded, title, tooltip)
 	title = title or parent:GetText()
 	tooltip = tooltip or title .. "\n\n" .. L["Left Click: Abandon quest"] .. "\n" .. (excluded and L["Right Click: Include quest in group abandons"] or L["Right Click: Exclude quest from group abandons"])
 
@@ -132,7 +115,6 @@ local function RenderAbandonButton(parent, offset, questId, logIndex, excluded, 
 	button.title = title
 	button.tooltip = tooltip
 	button.questId = questId
-	button.logIndex = logIndex
 	button:SetPoint("CENTER", parent, "CENTER", offset, 0)
 
 	if excluded then
@@ -161,29 +143,14 @@ local function RenderGroupAbandonButton(parent, offset, title, tooltip, key)
 	end
 end
 
--- ! TODO: Last quest isn't getting a button
 local function ShowAbandonButtons()
 	questButtonPool:ReleaseAll()
 	groupButtonPool:ReleaseAll()
 
-	-- if (E.db.general.zoneQuests.showAbandonButton) then
-	-- 	for header in QuestLogListScrollFrame.headerFramePool:EnumerateActive() do
-	-- 		RenderGroupAbandonButton(header, QuestLogListScrollFrame:GetWidth() - 25)
-	-- 	end
-	-- end
-
-	-- if (E.db.general.individualQuests.showAbandonButton) then
-	-- 	for quest in QuestLogListScrollFrame.titleFramePool:EnumerateActive() do
-	-- 		local questId = quest.questID
-	-- 		local text = quest.Text:GetText()
-	-- 		local excluded = E:IsExcluded(questId)
-	-- 		RenderAbandonButton(quest.TaskIcon, QuestLogListScrollFrame:GetWidth() - 50, questId, excluded, text)
-	-- 	end
-	-- end
 	local numEntries, numQuests = GetNumQuestLogEntries()
 	for i = 1, E.questsDisplayed do
 		local questIndex = i + QuestLogListScrollFrame.offset
-		if (questIndex < numEntries) then
+		if (questIndex <= numEntries) then
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
 			local questLogTitle = getglobal("QuestLogTitle" .. i)
 			local questTitleTag = getglobal("QuestLogTitle" .. i .. "Tag")
@@ -197,8 +164,8 @@ local function ShowAbandonButtons()
 			if isHeader then
 				RenderGroupAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 138, title)
 			else
-				local excluded = E:IsExcluded(questId)
-				RenderAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 163, questID, questIndex, excluded, title)
+				local excluded = E:IsExcluded(questID)
+				RenderAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 163, questID, excluded, title)
 			end
 		end
 	end
@@ -226,12 +193,11 @@ function onAbandonButtonClick(self, button)
 			local dialog = StaticPopup_Show("RECKLESS_ABANDON_CONFIRMATION", self.title)
 			if dialog then
 				dialog.data = {
-					questId = self.questId,
-					logIndex = self.logIndex
+					questId = self.questId
 				}
 			end
 		else
-			E:AbandonQuest(self.questId, self.logIndex)
+			E:AbandonQuest(self.questId)
 		end
 	elseif button == "RightButton" then
 		local texture = self:GetNormalTexture()
@@ -290,7 +256,6 @@ end
 
 function E:GenerateQuestTable()
 	-- This generates a table of quests
-	-- * In classic, collapsing a zone header removes the quests from this object
 	-- {
 	-- 	[<zone_header_id>] = {
 	-- 		["quests"] = {
@@ -300,6 +265,7 @@ function E:GenerateQuestTable()
 	-- 		["hidden"] = false,
 	-- 	},
 	-- }
+	-- * In classic, collapsing a zone header removes the quests from this object
 
 	local currentGroup = {quests = {}}
 
@@ -322,30 +288,29 @@ function E:GenerateQuestTable()
 	self:Debug(self:Dump(self.private.exclusions.excludedQuests))
 end
 
--- TODO: Update API
 function E:AbandonAllQuests()
 	for i = 1, GetNumQuestLogEntries() do
-		local info = C_QuestLog.GetInfo(i)
+		local info = GetQuestLogTitle(i)
 		local questId = info.questID
+		local title = info.title
 
 		if (not info.isHeader) then
 			if (not self.private.exclusions.excludedQuests[questId]) then
 				self:AbandonQuest(questId)
 			else
-				self:Print(format(L["Skipping %s since it is excluded from group abandons"], GetQuestLink(questId)))
+				self:Print(format(L["Skipping '%s' since it is excluded from group abandons"], title))
 			end
 		end
 	end
 end
 
--- TODO: Add logIndex to quests object
 function E:AbandonQuests(key)
 	local group = questGroupsByName[key] or {}
-	for questId, _ in pairs(group.quests or {}) do
+	for questId, title in pairs(group.quests or {}) do
 		if (not self.private.exclusions.excludedQuests[questId]) then
 			self:AbandonQuest(questId)
 		else
-			self:Print(format(L["Skipping %s since it is excluded from group abandons"], GetQuestLink(questId)))
+			self:Print(format(L["Skipping '%s' since it is excluded from group abandons"], title))
 		end
 	end
 
@@ -354,12 +319,14 @@ function E:AbandonQuests(key)
 	end
 end
 
-function E:AbandonQuest(questId, logIndex)
+function E:AbandonQuest(questId)
+	local logIndex = GetQuestLogIndexByID(questId)
+	local title = GetQuestLogTitle(logIndex)
+
 	SelectQuestLogEntry(logIndex)
 	SetAbandonQuest()
 	AbandonQuest()
 
-	local title = QuestTitleFromID[questId]
 	self:Print(format(L["|cFFFFFF00Abandoned quest '%s'|r"], title))
 
 	if E.private.exclusions.autoPrune and self:IsExcluded(questId) then
@@ -368,13 +335,15 @@ function E:AbandonQuest(questId, logIndex)
 end
 
 function E:ExcludeQuest(questId)
-	local title = QuestTitleFromID[questId]
+	local index = GetQuestLogIndexByID(questId)
+	local title = GetQuestLogTitle(index)
 	self:Print(format(L["Excluding quest '%s' from group abandons"], title))
 	self.private.exclusions.excludedQuests[tonumber(questId)] = title
 end
 
 function E:IncludeQuest(questId)
-	local title = QuestTitleFromID[questId]
+	local index = GetQuestLogIndexByID(questId)
+	local title = GetQuestLogTitle(index)
 	self:Print(format(L["Including quest '%s' in group abandons"], title))
 	self.private.exclusions.excludedQuests[tonumber(questId)] = nil
 end
@@ -384,15 +353,14 @@ function E:IsExcluded(questId)
 end
 
 function E:PruneQuestExclusion(questId)
-	local title = E.private.exclusions.excludedQuests[questId]
-	E.private.exclusions.excludedQuests[questId] = nil
+	local title = E.private.exclusions.excludedQuests[tonumber(questId)]
+	E.private.exclusions.excludedQuests[tonumber(questId)] = nil
 	self:Print(format(L["Pruning '%s' from the exclusion list"], title))
 end
 
--- TODO: Update API, might need to add log index to exclusion object
 function E:ClearQuestExclusions()
 	for questId, _ in pairs(E.private.exclusions.excludedQuests) do
-		local orphaned = C_QuestLog.GetLogIndexForQuestID(questId) == nil
+		local orphaned = GetQuestLogIndexByID(questId) == 0
 		if orphaned then
 			self:PruneQuestExclusion(questId)
 		else
@@ -401,11 +369,10 @@ function E:ClearQuestExclusions()
 	end
 end
 
--- TODO: Update API, might need to add log index to exclusion object
 function E:PruneQuestExclusions()
 	local count = 0
 	for questId, _ in pairs(E.private.exclusions.excludedQuests) do
-		local orphaned = C_QuestLog.GetLogIndexForQuestID(questId) == nil
+		local orphaned = GetQuestLogIndexByID(questId) == 0
 		if orphaned then
 			count = count + 1
 			self:PruneQuestExclusion(questId)
@@ -427,13 +394,12 @@ function E:CliAbandonAllQuests()
 	end
 end
 
--- TODO: Update API
 function E:CliAbandonQuestById(questId)
 	if self.db.commands.abandonByQuestId then
-		local index = C_QuestLog.GetLogIndexForQuestID(questId)
-		if index ~= nil then
+		local index = GetQuestLogIndexByID(questId)
+		if index ~= 0 then
 			if self.db.general.confirmIndividual then
-				local title = C_QuestLog.GetInfo(index).title
+				local title = GetQuestLogTitle(index)
 				local dialog = StaticPopup_Show("RECKLESS_ABANDON_CONFIRMATION", title)
 				if dialog then
 					dialog.data = {
@@ -441,7 +407,7 @@ function E:CliAbandonQuestById(questId)
 					}
 				end
 			else
-				self:AbandonQuest(questId)
+				self:AbandonQuest(questId, index)
 			end
 		else
 			self:Print(format(L["Unable to abandon quest, '%s' is not recognized. Either the quest is not in your quest log, or you may have entered the wrong id."], questId))
@@ -451,15 +417,15 @@ function E:CliAbandonQuestById(questId)
 	end
 end
 
--- TODO: Update API, might need to add log index to exclusion object
 function E:CliExcludeQuestById(questId)
 	if self.db.commands.excludeByQuestId then
-		local index = C_QuestLog.GetLogIndexForQuestID(questId)
-		if index ~= nil then
+		local index = GetQuestLogIndexByID(questId)
+		local title = GetQuestLogTitle(index)
+		if index ~= 0 then
 			if not self:IsExcluded(questId) then
 				self:ExcludeQuest(questId)
 			else
-				self:Print(format(L["%s is already excluded from group abandons!"], GetQuestLink(questId)))
+				self:Print(format(L["'%s' is already excluded from group abandons!"], title))
 			end
 		else
 			self:Print(format(L["Unable to exclude quest, '%s' is not recognized. Either the quest is not in your quest log, or you may have entered the wrong id."], questId))
@@ -469,15 +435,15 @@ function E:CliExcludeQuestById(questId)
 	end
 end
 
--- TODO: Update API, might need to add log index to exclusion object
 function E:CliIncludeQuestById(questId)
 	if self.db.commands.includeByQuestId then
-		local index = C_QuestLog.GetLogIndexForQuestID(questId)
-		if index ~= nil then
+		local index = GetQuestLogIndexByID(questId)
+		local title = GetQuestLogTitle(index)
+		if index ~= 0 then
 			if self:IsExcluded(questId) then
 				self:IncludeQuest(questId)
 			else
-				self:Print(format(L["%s is already included in group abandons!"], GetQuestLink(questId)))
+				self:Print(format(L["'%s' is already included in group abandons!"], title))
 			end
 		else
 			self:Print(format(L["Unable to include quest, '%s' is not recognized. Either the quest is not in your quest log, or you may have entered the wrong id."], questId))
@@ -487,8 +453,10 @@ function E:CliIncludeQuestById(questId)
 	end
 end
 
-function E:PrintWelcomMessage()
-	self:Print(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/reckless config|r to configure settings."], E.version))
+function E:PrintWelcomeMessage()
+	if self.db.general.loginMessage then
+		self:Print(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/reckless config|r to configure settings."], E.version))
+	end
 end
 
 function E:Initialize()

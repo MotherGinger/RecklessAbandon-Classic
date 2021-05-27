@@ -18,7 +18,7 @@ E.Options.args.about = {
             order = 1,
             type = "description",
             fontSize = "medium",
-            name = format(L["Written by |T626001:0|t |cFF3FC7EB%s|r"], E.author)
+            name = format(L["Written by |T626001:0|t |cFF3FC7EB%s|r"] .. " (Retail), |T626008:0|t |cFFC69B6DFrauke-Benediction (US)|r (Classic), |T626003:0|t |cFFF48CBAAllyïa-Mankrik (US)|r (BC Classic)", E.author)
         },
         space1 = {
             order = 2,
@@ -35,6 +35,16 @@ E.Options.args.about = {
                     order = 0,
                     type = "description",
                     name = format("|T626001:0|t |cFF3FC7EB%s|r", E.author)
+                },
+                frauke = {
+                    order = 1,
+                    type = "description",
+                    name = "|T626008:0|t |cFFC69B6DFrauke-Benediction (US)|r"
+                },
+                allyia = {
+                    order = 2,
+                    type = "description",
+                    name = "|T626003:0|t |cFFF48CBAAllyïa-Mankrik (US)|r"
                 }
             }
         },
