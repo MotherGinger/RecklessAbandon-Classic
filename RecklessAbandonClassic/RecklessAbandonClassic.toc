@@ -1,7 +1,7 @@
-## Interface: 11307
+## Interface: 20501
 ## Author: Arrila-Thrall (US)
 ## Version: 1.0.0-alpha.1
-## Title: |cFF80528CReckless Abandon|r |cFFFFF569Classic|r
+## Title: |cFF80528CReckless Abandon|r |cFF00FF00BC Classic|r
 ## Notes: A tool for quickly (and recklessly) abandoning quests
 ## SavedVariables: RecklessAbandonClassicDB, RecklessAbandonClassicPrivateDB
 ## SavedVariablesPerCharacter: RecklessAbandonClassicCharacterDB

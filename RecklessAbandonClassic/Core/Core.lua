@@ -36,7 +36,7 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 --Constants
 E.noop = function()
 end
-E.title = format("|cFF80528C%s|r |cFFFFF569%s|r", "Reckless Abandon", "Classic")
+E.title = format("|cFF80528C%s|r |cFF00FF00%s|r", "Reckless Abandon", "BC Classic")
 E.version = GetAddOnMetadata("RecklessAbandonClassic", "Version")
 E.author = GetAddOnMetadata("RecklessAbandonClassic", "Author")
 E.myfaction, E.myLocalizedFaction = UnitFactionGroup("player")
