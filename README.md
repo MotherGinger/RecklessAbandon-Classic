@@ -78,3 +78,5 @@ To report an issue please fill out a [bug report](https://github.com/MotherGinge
   - _No, I just happen to use ElvUI so the screenshots are skinned. Reckless Abandon works with or without ElvUI._
 - **Does Reckless Abandon work for retail?**
   - _Yes! Checkout the retail version on [CurseForge](https://www.curseforge.com/wow/addons/reckless-abandon) or [Github](https://github.com/MotherGinger/RecklessAbandon)_
+- **Does Reckless Abandon work for Burning Crusade Classic?**
+  - _Yes! At the current moment, each release contains a BCC version_
