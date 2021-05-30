@@ -161,9 +161,9 @@ local function ShowAbandonButtons()
 
 			questLogTitle:SetWidth(QuestLogListScrollFrame:GetWidth() - 50)
 
-			if isHeader then
+			if isHeader and E.db.general.zoneQuests.showAbandonButton then
 				RenderGroupAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 138, title)
-			else
+			elseif not isHeader and E.db.general.individualQuests.showAbandonButton then
 				local excluded = E:IsExcluded(questID)
 				RenderAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 163, questID, excluded, title)
 			end
