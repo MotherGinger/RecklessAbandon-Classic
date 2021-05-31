@@ -270,7 +270,7 @@ function E:GenerateQuestTable()
 	local currentGroup = {quests = {}}
 
 	for i = 1, GetNumQuestLogEntries() do
-		local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(i)
+		local title, _, _, isHeader, _, _, _, questID, _, _, _, _, _, _, _, isHidden = GetQuestLogTitle(i)
 		if isHeader then
 			currentGroup = {
 				title = title,
@@ -290,13 +290,11 @@ end
 
 function E:AbandonAllQuests()
 	for i = 1, GetNumQuestLogEntries() do
-		local info = GetQuestLogTitle(i)
-		local questId = info.questID
-		local title = info.title
+		local title, _, _, isHeader, _, _, _, questID = GetQuestLogTitle(i)
 
-		if (not info.isHeader) then
-			if (not self.private.exclusions.excludedQuests[questId]) then
-				self:AbandonQuest(questId)
+		if (not isHeader) then
+			if (not self.private.exclusions.excludedQuests[questID]) then
+				self:AbandonQuest(questID)
 			else
 				self:Print(format(L["Skipping '%s' since it is excluded from group abandons"], title))
 			end
