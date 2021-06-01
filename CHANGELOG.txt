@@ -3,27 +3,30 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+
+- v1.0.0 - 2021-05-31
   - Added
     - Abandon buttons for individual quests
     - Abandon buttons for zone quests
     - Abandon buttons for campaign quests
     - Abandon buttons for covenant callings
     - Ability to exclude quests from group abandons. Right click a quest abandon button to exclude it.
-    - New command line for abandoning quests by quest id
+    - Command line for abandoning quests by quest id
       - /reckless abandon <questId>
       - You can enable it in the configuration panel
-    - New command line for excluding quests from group abandons by quest id
+    - Command line for excluding quests from group abandons by quest id
       - /reckless exclude <questId>
       - You can enable it in the configuration panel
-    - New command line for including quests in group abandons by quest id
+    - Command line for including quests in group abandons by quest id
       - /reckless include <questId>
       - You can enable it in the configuration panel
-    - New configuration options for exclusions lists
+    - Configuration options for exclusions lists
       - Enable automatic pruning to remove a quest from the exclusion list when abandoned
       - Prune orphaned quests manually by clicking the "Prune Exclusion List" button
-    - New configuration toggle for showing the login message
+    - Configuration toggle for showing the login message
     - Configuration panel
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/HEAD...develop
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.0.0...develop
+[v1.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/releases/tag/v1.0.0
