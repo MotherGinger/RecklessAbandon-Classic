@@ -27,6 +27,7 @@ local IsInRaid = IsInRaid
 local SetCVar = SetCVar
 local UnitFactionGroup = UnitFactionGroup
 local UnitGUID = UnitGUID
+local IsAddOnLoaded = IsAddOnLoaded
 
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
@@ -53,7 +54,7 @@ E.isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
-E.questsDisplayed = 6
+E.questsDisplayed = 6 -- Standard Blizzard UI Quest Log maximum quests shown (includes headers)
 
 local questGroupsByName = {}
 -- TODO: We might want to create custom textures for each type
@@ -146,6 +147,15 @@ end
 local function ShowAbandonButtons()
 	questButtonPool:ReleaseAll()
 	groupButtonPool:ReleaseAll()
+
+	local isElvUILoaded = IsAddOnLoaded("ElvUI")
+	local isWQLLoaded = IsAddOnLoaded("WideQuestLog")
+
+	if isElvUILoaded and isWQLLoaded then
+		E.questsDisplayed = 24 -- WQL and ElvUI
+	elseif not isElvUILoaded and isWQLLoaded then
+		E.questsDisplayed = 23 -- WQL only
+	end
 
 	local numEntries, numQuests = GetNumQuestLogEntries()
 	for i = 1, E.questsDisplayed do
