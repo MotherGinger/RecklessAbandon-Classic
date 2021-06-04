@@ -390,6 +390,23 @@ function E:PruneQuestExclusions()
 	self:Print(format(L["Pruned %s |4orphan:orphans;!"], count))
 end
 
+function E:CliListAllQuests()
+	if self.db.commands.listAll then
+		self:Print("-------------------------------------------")
+		self:Print(L["|cFFFF9C00<Zone Header>|r"])
+		self:Print(L["    |cFFF2E699<Title>|r - |cFFB5FFEB<QuestID>|r"])
+		self:Print("-------------------------------------------")
+		for i = 1, GetNumQuestLogEntries() do
+			local title, _, _, isHeader, _, _, _, questID = GetQuestLogTitle(i)
+			if isHeader then
+				self:Print("|cFFFF9C00" .. title .. "|r")
+			else
+				self:Print("    |cFFF2E699" .. title .. "|r" .. " - " .. "|cFFB5FFEB" .. questID .. "|r")
+			end
+		end
+	end
+end
+
 function E:CliAbandonAllQuests()
 	if self.db.commands.abandonAll then
 		if self.db.general.confirmGroup then

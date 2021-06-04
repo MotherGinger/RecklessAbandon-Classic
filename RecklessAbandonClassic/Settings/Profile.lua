@@ -13,6 +13,7 @@ P.general = {
 }
 
 P.commands = {
+    listAll = true,
     abandonAll = false,
     abandonByQuestId = false,
     excludeByQuestId = false,
