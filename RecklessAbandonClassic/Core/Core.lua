@@ -54,7 +54,6 @@ E.isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
-E.questsDisplayed = 6 -- Standard Blizzard UI Quest Log maximum quests shown (includes headers)
 
 local questGroupsByName = {}
 -- TODO: We might want to create custom textures for each type
@@ -148,17 +147,8 @@ local function ShowAbandonButtons()
 	questButtonPool:ReleaseAll()
 	groupButtonPool:ReleaseAll()
 
-	local isElvUILoaded = IsAddOnLoaded("ElvUI")
-	local isWQLLoaded = IsAddOnLoaded("WideQuestLog")
-
-	if isElvUILoaded and isWQLLoaded then
-		E.questsDisplayed = 24 -- WQL and ElvUI
-	elseif not isElvUILoaded and isWQLLoaded then
-		E.questsDisplayed = 23 -- WQL only
-	end
-
 	local numEntries, numQuests = GetNumQuestLogEntries()
-	for i = 1, E.questsDisplayed do
+	for i = 1, QUESTS_DISPLAYED do
 		local questIndex = i + QuestLogListScrollFrame.offset
 		if (questIndex <= numEntries) then
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
@@ -507,7 +497,7 @@ function E:Initialize()
 	QuestLogListScrollFrame:HookScript(
 		"OnVerticalScroll",
 		function()
-			-- Render the next set of buttons. This is needed because the classic quest log only shows E.questsDisplayed titles at a time
+			-- Render the next set of buttons. This is needed because the classic quest log only shows QUESTS_DISPLAYED titles at a time
 			ShowAbandonButtons()
 
 			for button in questButtonPool:EnumerateActive() do
