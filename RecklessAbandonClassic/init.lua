@@ -164,4 +164,8 @@ end
 
 function E:QUEST_LOG_UPDATE()
 	E:GenerateQuestTable()
+
+	if self.db.general.autoAbandonFailed then
+		E:AbandonFailedQuests()
+	end
 end

@@ -9,7 +9,8 @@ P.general = {
     },
     zoneQuests = {
         showAbandonButton = true
-    }
+    },
+    autoAbandonFailed = false
 }
 
 P.commands = {

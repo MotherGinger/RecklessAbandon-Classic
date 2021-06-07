@@ -45,6 +45,11 @@ E.Options.args.about = {
                     order = 2,
                     type = "description",
                     name = "|T626003:0|t |cFFF48CBAAllyïa-Mankrik (US)|r"
+                },
+                rawrhax = {
+                    order = 3,
+                    type = "description",
+                    name = "|T626000:0|t |cFFABD473Rawrhax-Mankrik (US)|r"
                 }
             }
         },
