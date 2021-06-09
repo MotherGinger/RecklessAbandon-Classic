@@ -15,9 +15,10 @@ L["Enable/Disable Reckless Abandon"] = true
 L["Yes"] = true
 L["No"] = true
 
-L["Are you sure you want to abandon all quests in %s? This cannot be undone."] = true
-L["Are you sure you want to abandon %s?. This cannot be undone."] = true
-L["Are you sure you want to abandon all of the quests in your questlog? This cannot be undone."] = true
+L["Are you sure you want to abandon all quests in |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
+L["Are you sure you want to abandon |cFFF2E699%s|r?.\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
+L["Are you sure you want to abandon all of the quests in your questlog?\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
+L["Are you sure you want to abandon the following %s quests?\n\n|cFFF2E699%s|r\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
 
 L["Left Click: Abandon quest"] = true
 L["Right Click: Exclude quest from group abandons"] = true
@@ -45,9 +46,6 @@ L["Show Abandon Button"] = true
 L["Show Group Abandon Button"] = true
 L["Show an abandon button for individual quests."] = true
 L["Show a group abandon button for zone quests."] = true
-L["Show a group abandon button for campaign quests."] = true
-L["Show a group abandon button for covenant callings."] = true
-L["|cFF00D1FFNote:|r Blizzard currently does not allow covenant callings to be abandoned. This button will be disabled if shown."] = true
 
 L["Confirm individual abandons"] = true
 L["Prompt for confirmation when abandoning individual quests.\n\n|cFFFF6B6BCaution: Turning this off means a quest will be abandoned instantly. Be careful!|r"] = true
@@ -63,13 +61,36 @@ L["Slash Commands"] = true
 L["Enable |cff888888/reckless list all|r"] = true
 L["This command lists all quests in a table."] = true
 L["Enable |cff888888/reckless abandonall|r"] = true
-L["|cFFFFF569Warning:|r This command abandons all quests in your quest log, use it wisely."] = true
+L["|cFFFFF569Warning:|r This command abandons all quests in your quest log that are not excluded from group abandons, use it wisely."] = true
 L["Enable |cff888888/reckless abandon <questID>|r"] = true
 L["This command abandons a quest that matches the provided questID."] = true
 L["Enable |cff888888/reckless exclude <questID>|r"] = true
 L["This command excludes a quest that matches the provided questID from group abandons."] = true
 L["Enable |cff888888/reckless include <questID>|r"] = true
 L["This command includes a quest that matches the provided questID in group abandons."] = true
+L["Enable |cff888888/reckless abandon <qualifier>|r"] = true
+L["This command abandons all quests that match a given qualifier and are not excluded from group abandons."] = true
+
+L["Available Qualifiers:"] = true
+
+L["failed"] = true
+L["Matches all failed quests."] = true
+L["Matches all dungeon quests."] = true
+L["Matches all raid quests."] = true
+L["Matches all group quests."] = true
+L["Matches all heroic quests."] = true
+L["Matches all heroic quests."] = true
+L["Matches all pvp quests."] = true
+L["gray"] = true
+L["Matches all gray quests."] = true
+L["green"] = true
+L["Matches all green quests."] = true
+L["yellow"] = true
+L["Matches all yellow quests."] = true
+L["orange"] = true
+L["Matches all orange quests."] = true
+L["red"] = true
+L["Matches all red quests."] = true
 
 L["|cffffcc00%s Debug:|r"] = true
 L["Debug Settings"] = true
@@ -99,7 +120,6 @@ L["Written by |T626001:0|t |cFF3FC7EB%s|r"] = true
 L["Please report any bugs or request features on our issue board:"] = true
 
 L["|cFFFFFF00Abandoned quest %s|r"] = true
-L["|cFFFFFF00You can't abandon %s|r"] = true
 
 L["Skipping %s since it is excluded from group abandons"] = true
 L["Excluding quest %s from group abandons"] = true
@@ -122,3 +142,7 @@ L["Unable to include quest, '%s' is not recognized. Either the quest is not in y
 L["%s is alr1eady included in group abandons!"] = true
 
 L["You are running |cFFB5FFEBv%s|r. Type |cff888888/reckless config|r to configure settings."] = true
+
+L["Abandon invoked with qualifier '%s'"] = true
+L["Available Qualifiers:%s"] = true
+L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true

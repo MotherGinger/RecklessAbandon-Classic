@@ -123,6 +123,10 @@ E.Options.args.general = {
                 }
             }
         },
+        -- TODO - Tabulate calc like before
+        -- * Excluded quests are stored with the localized version of the title at time of exclusion
+        -- * This cannot be updated when language changes since the title can only be fetched for quests still in your log
+        -- * It would then be impossible to update titles for abandoned but still excluded quests
         exclusions = {
             order = 1,
             type = "group",
@@ -228,7 +232,7 @@ E.Options.args.general = {
                 abandonAll = {
                     order = 2,
                     name = L["Enable |cff888888/reckless abandon all|r"],
-                    desc = L["|cFFFFF569Warning:|r This command abandons all quests in your quest log, use it wisely."],
+                    desc = L["|cFFFFF569Warning:|r This command abandons all quests in your quest log that are not excluded from group abandons, use it wisely."],
                     descStyle = "inline",
                     width = "full",
                     type = "toggle",
@@ -253,8 +257,22 @@ E.Options.args.general = {
                         E.db.commands[info[#info]] = value
                     end
                 },
-                excludeByQuestId = {
+                abandonByQualifier = {
                     order = 4,
+                    name = L["Enable |cff888888/reckless abandon <qualifier>|r"],
+                    desc = format("%s\n\n%s\n\n%s", L["This command abandons all quests that match a given qualifier and are not excluded from group abandons."], L["Available Qualifiers:"], E:Tabulate(E:GetAvailableQualifiers(), "|cFFF2E699%s|r - %s\n")),
+                    descStyle = "inline",
+                    width = "full",
+                    type = "toggle",
+                    get = function(info)
+                        return E.db.commands[info[#info]]
+                    end,
+                    set = function(info, value)
+                        E.db.commands[info[#info]] = value
+                    end
+                },
+                excludeByQuestId = {
+                    order = 5,
                     name = L["Enable |cff888888/reckless exclude <questID>|r"],
                     desc = L["This command excludes a quest that matches the provided questID from group abandons."],
                     descStyle = "inline",
@@ -268,7 +286,7 @@ E.Options.args.general = {
                     end
                 },
                 includeByQuestId = {
-                    order = 5,
+                    order = 6,
                     name = L["Enable |cff888888/reckless include <questID>|r"],
                     desc = L["This command includes a quest that matches the provided questID in group abandons."],
                     descStyle = "inline",
