@@ -1,6 +1,7 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
-local format = format
+local tostring = tostring
+local format, strlen, strrep = format, strlen, strrep
 
 E.Options.args.general = {
     type = "group",
@@ -123,10 +124,6 @@ E.Options.args.general = {
                 }
             }
         },
-        -- TODO - Tabulate calc like before
-        -- * Excluded quests are stored with the localized version of the title at time of exclusion
-        -- * This cannot be updated when language changes since the title can only be fetched for quests still in your log
-        -- * It would then be impossible to update titles for abandoned but still excluded quests
         exclusions = {
             order = 1,
             type = "group",
@@ -160,6 +157,10 @@ E.Options.args.general = {
                         local exclusions = format("|cFFF2E699%s|r | %s\n--------------------", L["QuestID"], L["Title"])
                         local titleFormat = "\n|cFFF2E699%s|r    | %s"
                         local orphanTitleFormat = "\n|cFFF2E699%s|r    | |cFFFF6B6B%s|r"
+
+                        -- * Excluded quests are stored with the localized version of the title at time of exclusion
+                        -- * This cannot be updated when language changes since the title can only be fetched for quests still in your log
+                        -- * It would then be impossible to update titles for abandoned but still excluded quests
                         for questId, title in pairs(E.private.exclusions.excludedQuests) do
                             local orphaned = GetQuestLogIndexByID(questId) == 0
                             exclusions = exclusions .. format(orphaned and orphanTitleFormat or titleFormat, questId, title)
