@@ -304,19 +304,24 @@ function E:GenerateQuestTable()
 	-- 		["hidden"] = false,
 	-- 	},
 	-- }
-	-- * In classic, collapsing a zone header removes the quests from this object
 
 	local currentGroup = {quests = {}}
 
 	for i = 1, GetNumQuestLogEntries() do
-		local title, _, _, isHeader, _, _, _, questID, _, _, _, _, _, _, _, isHidden = GetQuestLogTitle(i)
+		local title, _, _, isHeader, isCollapsed, _, _, questID, _, _, _, _, _, _, _, isHidden = GetQuestLogTitle(i)
 		if isHeader then
 			currentGroup = {
 				title = title,
 				hidden = true,
 				quests = {}
 			}
-			questGroupsByName[getKey(title)] = currentGroup
+
+			-- * In classic, collapsing a zone header "removes" the quests from the log since they aren't rendered
+			-- * If the header is collapsed, don't overwrite the last known quests under it to work around this
+			-- * This should always work as long as the headers are expanded at least once which tends to happen on initial load anyways
+			if not isCollapsed then
+				questGroupsByName[getKey(title)] = currentGroup
+			end
 		else
 			currentGroup.hidden = currentGroup.hidden and isHidden
 			currentGroup.quests[questID] = title
