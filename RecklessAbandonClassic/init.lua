@@ -46,6 +46,7 @@ E.DF = {profile = {}, global = {}} -- Defaults
 E.privateVars = {profile = {}} -- Defaults
 E.Options = {type = "group", args = {}}
 E.callbacks = E.callbacks or CallbackHandler:New(E)
+E.locale = GetLocale()
 
 Engine[1] = E
 Engine[2] = {}
@@ -55,9 +56,8 @@ Engine[5] = E.DF.global
 _G.RecklessAbandonClassic = Engine
 
 do
-	local locale = GetLocale()
 	local convert = {enGB = "enUS", esES = "esMX", itIT = "enUS"}
-	local gameLocale = convert[locale] or locale or "enUS"
+	local gameLocale = convert[E.locale] or E.locale or "enUS"
 
 	function E:GetLocale()
 		return gameLocale
@@ -143,6 +143,7 @@ function E:ChatCommand(input)
 	local _, _, cmd, args = string.find(input, "%s?(%w+)%s?(.*)")
 	local qualifiers = E:GetAvailableQualifiers()
 
+	-- TODO localize commands
 	if cmd == "config" and args == "" then
 		E:ToggleOptionsUI()
 	elseif cmd == "list" and args == "all" then
@@ -158,7 +159,7 @@ function E:ChatCommand(input)
 	elseif cmd == "include" and tonumber(args) then
 		E:CliIncludeQuestById(args)
 	elseif cmd == "debug" then
-		E:ToggleDebugging()
+		E:CliToggleDebugging()
 	end
 end
 

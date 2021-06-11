@@ -1,9 +1,6 @@
 -- English localization file for enUS and enGB.
-local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
-local L = AceLocale:NewLocale("RecklessAbandonClassic", "enUS", true, true)
-if not L then
-    return
-end
+local E = unpack(select(2, ...)) -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local L = E.Libs.ACL:NewLocale("RecklessAbandonClassic", "enUS", true, true)
 
 L["Version"] = true
 L["Configuration"] = true
@@ -16,7 +13,7 @@ L["Yes"] = true
 L["No"] = true
 
 L["Are you sure you want to abandon all quests in |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
-L["Are you sure you want to abandon |cFFF2E699%s|r?.\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
+L["Are you sure you want to abandon |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
 L["Are you sure you want to abandon all of the quests in your questlog?\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
 L["Are you sure you want to abandon the following %s quests?\n\n|cFFF2E699%s|r\n\n|cFFFF6B6BThis cannot be undone.|r"] = true
 
@@ -24,9 +21,6 @@ L["Left Click: Abandon quest"] = true
 L["Right Click: Exclude quest from group abandons"] = true
 L["Right Click: Include quest in group abandons"] = true
 L["Left Click: Abandon all '%s' quests"] = true
-
-L["covenant callings"] = true
-L["Left Click: Abandon all covenant calling quests"] = true
 
 L["|cFFFF9C00<Zone Header>|r"] = true
 L["    |cFFF2E699<Title>|r - |cFFB5FFEB<QuestID>|r"] = true
@@ -38,8 +32,6 @@ L["Commands"] = true
 
 L["Individual Quests"] = true
 L["Zone Quests"] = true
-L["Campaign Quests"] = true
-L["Covenant Callings"] = true
 
 L["Show login message"] = true
 L["Show Abandon Button"] = true
@@ -60,7 +52,7 @@ L["Abandoned %s failed |4quest:quests;!"] = true
 L["Slash Commands"] = true
 L["Enable |cff888888/reckless list all|r"] = true
 L["This command lists all quests in a table."] = true
-L["Enable |cff888888/reckless abandonall|r"] = true
+L["Enable |cff888888/reckless abandon all|r"] = true
 L["|cFFFFF569Warning:|r This command abandons all quests in your quest log that are not excluded from group abandons, use it wisely."] = true
 L["Enable |cff888888/reckless abandon <questID>|r"] = true
 L["This command abandons a quest that matches the provided questID."] = true
@@ -95,10 +87,11 @@ L["Matches all red quests."] = true
 L["|cffffcc00%s Debug:|r"] = true
 L["Debug Settings"] = true
 L["Enable Debugging"] = true
-L["Print debugging statements when this is enabled"] = true
+L["Print debugging statements when this is enabled.\n\n|cFF00D1FFNote:|r You can also toggle this quickly via |cff888888/reckless debug|r"] = true
 
 L["Exclusions"] = true
 L["Quest Exclusion List"] = true
+L["Prune Exclusion List"] = true
 L["Clear Exclusion List"] = true
 L["The quest exclusion list allows you to exclude quests from group abandons. To use it, simply right click a quest abandon button in the quest log."] = true
 L["|cFF00D1FFNote:|r Each character has their own exclusion list."] = true
@@ -110,10 +103,6 @@ L["Clear the exclusion list by including quests that are still in your quest log
 L["Automatic Pruning"] = true
 L["Automatically prune quests from the exclusion list when they are abandoned.\n\n|cFF00D1FFNote:|r This does not retroactively prune quests that have already been abandoned, but are still in the exclusion list.\n\nUse the 'Prune Exclusion List' button below to do this manually."] = true
 
-L["Profiles"] = true
-L["Reset Profile"] = true
-L["|cFFFF6B6BCaution: This will reset all of your settings.|r\n\nThis can often times fix issues. Use at your own risk."] = true
-
 L["About"] = true
 L["Testers"] = true
 L["Written by |T626001:0|t |cFF3FC7EB%s|r"] = true
@@ -122,8 +111,8 @@ L["Please report any bugs or request features on our issue board:"] = true
 L["|cFFFFFF00Abandoned quest %s|r"] = true
 
 L["Skipping %s since it is excluded from group abandons"] = true
-L["Excluding quest %s from group abandons"] = true
-L["Including quest %s in group abandons"] = true
+L["Excluding quest '%s' from group abandons"] = true
+L["Including quest '%s' in group abandons"] = true
 
 L["QuestID"] = true
 L["Title"] = true
@@ -147,6 +136,5 @@ L["Abandon invoked with qualifier '%s'"] = true
 L["Available Qualifiers:%s"] = true
 L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true
 
-L["Debugging is now %s."] = true
-L["on"] = true
-L["off"] = true
+L["Debugging is now on."] = true
+L["Debugging is now off."] = true

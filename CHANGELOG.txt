@@ -17,6 +17,9 @@ This project adheres to Semantic Versioning.
   - Changed
     - Text formatting for some popups
     - Text for some configuration toggles
+    - Addon output no longer prints out what version of classic it is 
+  - Removed
+    - Unused localization strings
 
 - v1.1.0 - 2021-06-06
   - Added

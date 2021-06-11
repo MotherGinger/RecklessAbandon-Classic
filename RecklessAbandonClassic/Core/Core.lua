@@ -37,7 +37,8 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 --Constants
 E.noop = function()
 end
-E.title = format("|cFF80528C%s|r |cFF00FF00%s|r", "Reckless Abandon", "BC Classic")
+E.title = format("|cFF80528C%s|r", "Reckless Abandon")
+E.subtitle = format("|cFF00FF00%s|r", "BC Classic")
 E.version = GetAddOnMetadata("RecklessAbandonClassic", "Version")
 E.author = GetAddOnMetadata("RecklessAbandonClassic", "Author")
 E.myfaction, E.myLocalizedFaction = UnitFactionGroup("player")
@@ -268,11 +269,6 @@ function E:Debug(...)
 	end
 end
 
-function E:ToggleDebugging()
-	self.db.debugging.debugLogging = not self.db.debugging.debugLogging
-	self:Print(format(L["Debugging is now %s."], self.db.debugging.debugLogging and L["on"] or L["off"]))
-end
-
 function E:GetAvailableQualifiers()
 	local qualifiers = {
 		[L["failed"]] = L["Matches all failed quests."],
@@ -447,6 +443,11 @@ end
 ----------------------- Commands -------------------------------
 ----------------------------------------------------------------
 
+function E:CliToggleDebugging()
+	self.db.debugging.debugLogging = not self.db.debugging.debugLogging
+	self:Print(self.db.debugging.debugLogging and L["Debugging is now on."] or L["Debugging is now off."])
+end
+
 function E:CliListAllQuests()
 	if self.db.commands.listAll then
 		self:Print("-------------------------------------------")
@@ -549,6 +550,8 @@ function E:CliAbandonByQualifier(qualifier)
 				self:Print(format(L["|cFF808080There are no quests that match the qualifier '%s'.|r"], qualifier))
 			end
 		end
+	else
+		self:Print(L["Abandoning quests from the command line is currently |cFFFF6B6Bdisabled|r. You can enable it in the configuration settings |cff888888/reckless config|r"])
 	end
 end
 
