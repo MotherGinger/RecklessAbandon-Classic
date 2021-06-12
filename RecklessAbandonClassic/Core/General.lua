@@ -315,7 +315,7 @@ E.Options.args.general = {
                 debugLogging = {
                     order = 1,
                     name = L["Enable Debugging"],
-                    desc = L["Print debugging statements when this is enabled"],
+                    desc = L["Print debugging statements when this is enabled.\n\n|cFF00D1FFNote:|r You can also toggle this quickly via |cff888888/reckless debug|r"],
                     type = "toggle",
                     get = function(info)
                         return E.db.debugging[info[#info]]
