@@ -268,6 +268,11 @@ function E:Debug(...)
 	end
 end
 
+function E:ToggleDebugging()
+	self.db.debugging.debugLogging = not self.db.debugging.debugLogging
+	self:Print(format(L["Debugging is now %s."], self.db.debugging.debugLogging and L["on"] or L["off"]))
+end
+
 function E:GetAvailableQualifiers()
 	local qualifiers = {
 		[L["failed"]] = L["Matches all failed quests."],
@@ -433,7 +438,7 @@ function E:AbandonFailedQuests()
 end
 
 ----------------------------------------------------------------
----------------- Command Line Commands -------------------------
+----------------------- Commands -------------------------------
 ----------------------------------------------------------------
 
 function E:CliListAllQuests()

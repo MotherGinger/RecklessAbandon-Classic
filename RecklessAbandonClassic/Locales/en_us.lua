@@ -146,3 +146,7 @@ L["You are running |cFFB5FFEBv%s|r. Type |cff888888/reckless config|r to configu
 L["Abandon invoked with qualifier '%s'"] = true
 L["Available Qualifiers:%s"] = true
 L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true
+
+L["Debugging is now %s."] = true
+L["on"] = true
+L["off"] = true

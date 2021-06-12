@@ -158,7 +158,7 @@ function E:ChatCommand(input)
 	elseif cmd == "include" and tonumber(args) then
 		E:CliIncludeQuestById(args)
 	elseif cmd == "debug" then
-	-- TODO Toggle Debug
+		E:ToggleDebugging()
 	end
 end
 
