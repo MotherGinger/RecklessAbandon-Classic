@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+  - Added
+    - Command line for toggling debugging
+      - /reckless debug
+      - This command is always enabled
+    - Command for abandoning quests that match a qualifier
+      - Available qualifiers are dungeon, elite, failed, gray, green, group, heroic, orange, pvp, raid, red, yellow
+        - These qualifiers are localized and will match your language
+      - /reckless abandon <qualifier>
+      - You can enable it in the configuration panel
+    - Configuration options for automatically abandoning failed quests
+    - Localization for spanish
+  - Changed
+    - Text formatting for some popups
+    - Text for some configuration toggles
 
 - v1.1.0 - 2021-06-06
   - Added

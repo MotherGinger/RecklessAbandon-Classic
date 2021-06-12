@@ -141,6 +141,7 @@ LoadUI:SetScript(
 function E:ChatCommand(input)
 	-- /reckless cmd args
 	local _, _, cmd, args = string.find(input, "%s?(%w+)%s?(.*)")
+	local qualifiers = E:GetAvailableQualifiers()
 
 	if cmd == "config" and args == "" then
 		E:ToggleOptionsUI()
@@ -148,12 +149,16 @@ function E:ChatCommand(input)
 		E:CliListAllQuests()
 	elseif cmd == "abandon" and args == "all" then
 		E:CliAbandonAllQuests()
-	elseif cmd == "abandon" and tonumber(args) then
+	elseif cmd == "abandon" and tonumber(args) ~= nil then
 		E:CliAbandonQuestById(args)
+	elseif cmd == "abandon" and qualifiers[args] ~= nil then
+		E:CliAbandonByQualifier(args)
 	elseif cmd == "exclude" and tonumber(args) then
 		E:CliExcludeQuestById(args)
 	elseif cmd == "include" and tonumber(args) then
 		E:CliIncludeQuestById(args)
+	elseif cmd == "debug" then
+	-- TODO Toggle Debug
 	end
 end
 
