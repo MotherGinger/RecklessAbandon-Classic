@@ -14,7 +14,7 @@ P.general = {
 }
 
 P.commands = {
-    listAll = true,
+    listAll = false,
     abandonAll = false,
     abandonByQualifier = false,
     abandonByQuestId = false,
