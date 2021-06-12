@@ -1,4 +1,4 @@
-# Reckless Abandon
+# Reckless Abandon Classic
 
 A WoW Classic addon that lets you quickly (and _recklessly_) abandon quests.
 
@@ -7,7 +7,10 @@ A WoW Classic addon that lets you quickly (and _recklessly_) abandon quests.
 - Abandon individual quests with a single click
 - Abandon all zone quests with a single click (prompts for confirmation by default)
 - Command line option to abandon your entire quest log (disabled by default)
+- Command line option to abandon groups of quests based on qualifiers (disabled by default)
+  - Available Qualifiers: `dungeon`, `elite`, `failed`, `gray`, `green`, `group`, `heroic`, `orange`, `pvp`, `raid`, `red`, `yellow`
 - Exclude individual quests from group abandons
+- Automatically abandon failed quests (disabled by default)
 - Configuration panel to toggle confirmations and hide/show abandon buttons
 - Super tiny, less than 1MB of memory
 
@@ -46,6 +49,10 @@ To open the configuration panel run `/reckless config`
 
 All commands are disabled by default. You can enable them in the configuration panel.
 
+### List all quests
+
+`/reckless list all`
+
 ### Abandon all quests
 
 `/reckless abandon all`
@@ -53,6 +60,10 @@ All commands are disabled by default. You can enable them in the configuration p
 ### Abandon a quest by quest ID
 
 `/reckless abandon <questId>`
+
+### Abandon a quest by qualifier
+
+`/reckless abandon <qualifier>`
 
 ### Exclude a quest from group abandons by questID
 
