@@ -150,7 +150,7 @@ local function ShowAbandonButtons()
 	local numEntries, numQuests = GetNumQuestLogEntries()
 	for i = 1, QUESTS_DISPLAYED do
 		local questIndex = i + QuestLogListScrollFrame.offset
-		if (questIndex <= numEntries) then
+		if questIndex <= numEntries then
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
 			local questLogTitle = getglobal("QuestLogTitle" .. i)
 			local questTitleTag = getglobal("QuestLogTitle" .. i .. "Tag")
@@ -249,7 +249,7 @@ function E:Print(...)
 end
 
 function E:Debug(...)
-	if (self.db.debugging.debugLogging) then
+	if self.db.debugging.debugLogging then
 		print(strjoin("", format(L["|cffffcc00%s Debug:|r"], E.title), " ", ...))
 	end
 end
@@ -292,8 +292,8 @@ function E:AbandonAllQuests()
 	for i = 1, GetNumQuestLogEntries() do
 		local title, _, _, isHeader, _, _, _, questID = GetQuestLogTitle(i)
 
-		if (not isHeader) then
-			if (not self.private.exclusions.excludedQuests[questID]) then
+		if not isHeader then
+			if not self.private.exclusions.excludedQuests[questID] then
 				self:AbandonQuest(questID)
 			else
 				self:Print(format(L["Skipping '%s' since it is excluded from group abandons"], title))
@@ -305,7 +305,7 @@ end
 function E:AbandonQuests(key)
 	local group = questGroupsByName[key] or {}
 	for questId, title in pairs(group.quests or {}) do
-		if (not self.private.exclusions.excludedQuests[questId]) then
+		if not self.private.exclusions.excludedQuests[questId] then
 			self:AbandonQuest(questId)
 		else
 			self:Print(format(L["Skipping '%s' since it is excluded from group abandons"], title))
@@ -379,6 +379,26 @@ function E:PruneQuestExclusions()
 
 	self:Print(format(L["Pruned %s |4orphan:orphans;!"], count))
 end
+
+function E:AbandonFailedQuests()
+	local count = 0
+	for i = 1, GetNumQuestLogEntries() do
+		local title, _, _, isHeader, _, isComplete, _, questID = GetQuestLogTitle(i)
+
+		if not isHeader and isComplete == -1 then
+			count = count + 1
+			self:AbandonQuest(questID)
+		end
+	end
+
+	if count ~= 0 then
+		self:Print(format(L["Abandoned %s failed |4quest:quests;!"], count))
+	end
+end
+
+----------------------------------------------------------------
+---------------- Command Line Commands -------------------------
+----------------------------------------------------------------
 
 function E:CliListAllQuests()
 	if self.db.commands.listAll then

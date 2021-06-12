@@ -49,10 +49,15 @@ L["Show a group abandon button for campaign quests."] = true
 L["Show a group abandon button for covenant callings."] = true
 L["|cFF00D1FFNote:|r Blizzard currently does not allow covenant callings to be abandoned. This button will be disabled if shown."] = true
 
-L["Confirm individual abandon"] = true
+L["Confirm individual abandons"] = true
 L["Prompt for confirmation when abandoning individual quests.\n\n|cFFFF6B6BCaution: Turning this off means a quest will be abandoned instantly. Be careful!|r"] = true
-L["Confirm group abandon"] = true
+L["Confirm group abandons"] = true
 L["Prompt for confirmation when abandoning multiple quests.\n\n|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"] = true
+
+L["Automation Options"] = true
+L["Abandon Failed Quests"] = true
+L["Automatically abandon failed quests."] = true
+L["Abandoned %s failed |4quest:quests;!"] = true
 
 L["Slash Commands"] = true
 L["Enable |cff888888/reckless list all|r"] = true

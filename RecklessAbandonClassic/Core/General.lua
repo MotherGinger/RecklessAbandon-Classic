@@ -42,7 +42,7 @@ E.Options.args.general = {
                 },
                 confirmIndividual = {
                     order = 3,
-                    name = L["Confirm individual abandon"],
+                    name = L["Confirm individual abandons"],
                     desc = L["Prompt for confirmation when abandoning individual quests.\n\n|cFFFF6B6BCaution: Turning this off means a quest will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
                     get = function(info)
@@ -54,7 +54,7 @@ E.Options.args.general = {
                 },
                 confirmGroup = {
                     order = 4,
-                    name = L["Confirm group abandon"],
+                    name = L["Confirm group abandons"],
                     desc = L["Prompt for confirmation when abandoning multiple quests.\n\n|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
                     get = function(info)
@@ -103,6 +103,23 @@ E.Options.args.general = {
                             end
                         }
                     }
+                },
+                automationHeader = {
+                    order = 7,
+                    type = "header",
+                    name = L["Automation Options"]
+                },
+                autoAbandonFailed = {
+                    order = 8,
+                    name = L["Abandon Failed Quests"],
+                    desc = L["Automatically abandon failed quests."],
+                    type = "toggle",
+                    get = function(info)
+                        return E.db.general.autoAbandonFailed
+                    end,
+                    set = function(info, value)
+                        E.db.general.autoAbandonFailed = value
+                    end
                 }
             }
         },
