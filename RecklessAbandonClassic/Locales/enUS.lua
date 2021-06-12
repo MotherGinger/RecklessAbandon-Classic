@@ -110,7 +110,7 @@ L["Please report any bugs or request features on our issue board:"] = true
 
 L["|cFFFFFF00Abandoned quest %s|r"] = true
 
-L["Skipping %s since it is excluded from group abandons"] = true
+L["Skipping '%s' since it is excluded from group abandons"] = true
 L["Excluding quest '%s' from group abandons"] = true
 L["Including quest '%s' in group abandons"] = true
 
