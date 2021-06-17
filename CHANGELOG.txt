@@ -14,6 +14,7 @@ This project adheres to Semantic Versioning.
       - You can enable it in the configuration panel
     - Configuration options for automatically abandoning failed quests
     - Localization for spanish
+    - Client version warnings
   - Changed
     - Text formatting for some popups
     - Text for some configuration toggles

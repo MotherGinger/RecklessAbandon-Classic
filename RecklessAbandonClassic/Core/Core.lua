@@ -280,6 +280,11 @@ function E:Debug(...)
 	end
 end
 
+function E:UpdatePlayerLevel(level)
+	self:Print(format("%s leveled up (%d -> %d)!", E.myname, E.mylevel, level))
+	E.mylevel = level
+end
+
 function E:GetAvailableQualifiers()
 	local qualifiers = {
 		[L["failed"]] = L["Matches all failed quests."],
