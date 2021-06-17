@@ -18,7 +18,8 @@ This project adheres to Semantic Versioning.
   - Changed
     - Text formatting for some popups
     - Text for some configuration toggles
-    - Addon output no longer prints out what version of classic it is 
+    - Addon output no longer prints out what version of classic it is
+    - Tooltip styling
   - Removed
     - Unused localization strings
 
