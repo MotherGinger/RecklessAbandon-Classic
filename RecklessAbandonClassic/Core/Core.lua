@@ -53,14 +53,14 @@ E.wowbuild = tonumber(E.wowbuild)
 E.isMacClient = IsMacClient()
 E.isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 E.isClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5
 E.validVersion = WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
 E.wowVersionMatrix = {
 	[WOW_PROJECT_MAINLINE] = "Retail",
 	[WOW_PROJECT_CLASSIC] = "Classic Era",
-	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = "Burning Crusade Classic"
+	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5] = "Burning Crusade Classic"
 }
 
 local abandonTooltipFormat = "|cFFFFFAB8%s|r\n\n|cFFFFF569%s|r\n|cFFB5FFEB%s|r"
