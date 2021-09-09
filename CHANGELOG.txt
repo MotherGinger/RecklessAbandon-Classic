@@ -11,7 +11,7 @@ This project adheres to Semantic Versioning.
   - Changed
     - Updated TOC for 2.5.2
   - Removed
-    - Uneeded code utilities
+    - Unneeded code utilities
 
 - v1.2.0 - 2021-06-19
   - Added
