@@ -1,5 +1,39 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
+local waitTable = {}
+local waitFrame = nil
+
+function E:Wait(delay, func, ...)
+    if (type(delay) ~= "number" or type(func) ~= "function") then
+        return false
+    end
+    if (waitFrame == nil) then
+        waitFrame = CreateFrame("Frame", "WaitFrame", UIParent)
+        waitFrame:SetScript(
+            "onUpdate",
+            function(self, elapse)
+                local count = #waitTable
+                local i = 1
+                while (i <= count) do
+                    local waitRecord = tremove(waitTable, i)
+                    local d = tremove(waitRecord, 1)
+                    local f = tremove(waitRecord, 1)
+                    local p = tremove(waitRecord, 1)
+                    if (d > elapse) then
+                        tinsert(waitTable, i, {d - elapse, f, p})
+                        i = i + 1
+                    else
+                        count = count - 1
+                        f(unpack(p))
+                    end
+                end
+            end
+        )
+    end
+    tinsert(waitTable, {delay, func, {...}})
+    return true
+end
+
 function E:Dump(o)
     local cache, stack, output = {}, {}, {}
     local depth = 1
@@ -121,104 +155,4 @@ function E:Tabulate(t, template)
     table.sort(result)
 
     return table.concat(result)
-end
-
--- Frame Pool
-
-ObjectPoolMixin = {}
-
-function ObjectPoolMixin:OnLoad(creationFunc, resetterFunc)
-    self.creationFunc = creationFunc
-    self.resetterFunc = resetterFunc
-
-    self.activeObjects = {}
-    self.inactiveObjects = {}
-
-    self.numActiveObjects = 0
-end
-
-function ObjectPoolMixin:Acquire()
-    local numInactiveObjects = #self.inactiveObjects
-    if numInactiveObjects > 0 then
-        local obj = self.inactiveObjects[numInactiveObjects]
-        self.activeObjects[obj] = true
-        self.numActiveObjects = self.numActiveObjects + 1
-        self.inactiveObjects[numInactiveObjects] = nil
-        return obj, false
-    end
-
-    local newObj = self.creationFunc(self)
-    if self.resetterFunc then
-        self.resetterFunc(self, newObj)
-    end
-    self.activeObjects[newObj] = true
-    self.numActiveObjects = self.numActiveObjects + 1
-    return newObj, true
-end
-
-function ObjectPoolMixin:Release(obj)
-    assert(self.activeObjects[obj])
-
-    self.inactiveObjects[#self.inactiveObjects + 1] = obj
-    self.activeObjects[obj] = nil
-    self.numActiveObjects = self.numActiveObjects - 1
-    if self.resetterFunc then
-        self.resetterFunc(self, obj)
-    end
-end
-
-function ObjectPoolMixin:ReleaseAll()
-    for obj in pairs(self.activeObjects) do
-        self:Release(obj)
-    end
-end
-
-function ObjectPoolMixin:EnumerateActive()
-    return pairs(self.activeObjects)
-end
-
-function ObjectPoolMixin:GetNextActive(current)
-    return (next(self.activeObjects, current))
-end
-
-function ObjectPoolMixin:GetNumActive()
-    return self.numActiveObjects
-end
-
-function ObjectPoolMixin:EnumerateInactive()
-    return ipairs(self.inactiveObjects)
-end
-
-function CreateObjectPool(creationFunc, resetterFunc)
-    local objectPool = CreateFromMixins(ObjectPoolMixin)
-    objectPool:OnLoad(creationFunc, resetterFunc)
-    return objectPool
-end
-
-FramePoolMixin = Mixin({}, ObjectPoolMixin)
-
-local function FramePoolFactory(framePool)
-    return CreateFrame(framePool.frameType, nil, framePool.parent, framePool.frameTemplate)
-end
-
-function FramePoolMixin:OnLoad(frameType, parent, frameTemplate, resetterFunc)
-    ObjectPoolMixin.OnLoad(self, FramePoolFactory, resetterFunc)
-    self.frameType = frameType
-    self.parent = parent
-    self.frameTemplate = frameTemplate
-end
-
-function FramePool_Hide(framePool, frame)
-    frame:Hide()
-end
-
-function FramePool_HideAndClearAnchors(framePool, frame)
-    frame:Hide()
-    frame:ClearAllPoints()
-end
-
-function E:CreateFramePool(frameType, parent, frameTemplate, resetterFunc)
-    local framePool = CreateFromMixins(FramePoolMixin)
-    framePool:OnLoad(frameType, parent, frameTemplate, resetterFunc or FramePool_HideAndClearAnchors)
-    return framePool
 end

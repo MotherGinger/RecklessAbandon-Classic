@@ -173,7 +173,9 @@ function E:QUEST_LOG_UPDATE()
 	E:GenerateQuestTable()
 
 	if self.db.general.autoAbandonFailed then
-		E:AbandonFailedQuests()
+		-- * Give the client/server a second to actually update the quest log before inspecting it
+		-- * This delay may need to be adjusted
+		E:Wait(1, E:AbandonFailedQuests())
 	end
 end
 
