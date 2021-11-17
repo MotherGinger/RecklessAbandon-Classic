@@ -4,6 +4,13 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.2.2 - 2021-11-17
+  - Fixed
+    - An issue where failed quests were not being abandoned automatically when configured
+    - An issue where addon messages for abandoned failed quests were triggered multiple times
+  - Removed
+    - Deprecated code utilities
+
 - v1.2.1 - 2021-11-16
   - Changed
     - Updated TOC for season of mastery
@@ -61,7 +68,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1...develop
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2...develop
+[v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1...v1.2.2
 [v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.0.0...v1.1.0
