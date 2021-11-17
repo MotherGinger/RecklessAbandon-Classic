@@ -67,8 +67,8 @@ local abandonTooltipFormat = "|cFFFFFAB8%s|r\n\n|cFFFFF569%s|r\n|cFFB5FFEB%s|r"
 local groupAbandonTooltipFormat = "|cFFFFFAB8%s|r\n\n|cFFFFF569%s|r"
 local questGroupsByName = {}
 -- TODO: We might want to create custom textures for each type
-local questButtonPool = E:CreateFramePool("Button", QuestLogFrame, "RECKLESS_ABANDON_BUTTON")
-local groupButtonPool = E:CreateFramePool("Button", QuestLogFrame, "RECKLESS_GROUP_ABANDON_BUTTON")
+local questButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_ABANDON_BUTTON")
+local groupButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_GROUP_ABANDON_BUTTON")
 
 StaticPopupDialogs["RECKLESS_ABANDON_GROUP_CONFIRMATION"] = {
 	text = L["Are you sure you want to abandon all quests in |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"],
@@ -440,7 +440,6 @@ function E:PruneQuestExclusions()
 	self:Print(format(L["Pruned %s |4orphan:orphans;!"], count))
 end
 
--- ! Prints twice sometimes, likely since we abandon so quickly it trigger a second event before it actually abandons
 function E:AbandonFailedQuests()
 	local count = 0
 	for i = 1, GetNumQuestLogEntries() do
