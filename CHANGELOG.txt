@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.2.1 - 2021-11-16
+  - Changed
+    - Updated TOC for season of mastery
+
 - v1.2.0 - 2021-06-19
   - Added
     - New command line for toggling debugging
@@ -58,6 +62,7 @@ This project adheres to Semantic Versioning.
     - Documentation
 
 [unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...develop
+[v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/releases/tag/v1.0.0
