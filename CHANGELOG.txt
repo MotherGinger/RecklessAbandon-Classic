@@ -5,6 +5,8 @@ This project adheres to Semantic Versioning.
 - Unreleased
   - Fixed
     - Refresh config gui on cli change
+  - Removed
+    - Deprecated code utilities
 
 - v1.2.1 - 2021-09-09
   - Fixed
