@@ -5,6 +5,7 @@ This project adheres to Semantic Versioning.
 - Unreleased
   - Fixed
     - Refresh config gui on cli change
+    - Rare instances of lua errors when accepting quests very quickly via addons like AutoTurnIn or Leatrix Plus
   - Removed
     - Deprecated code utilities
 
