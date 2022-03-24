@@ -3,9 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+
+- v1.2.2 - 2022-03-24
   - Fixed
     - Refresh config gui on cli change
     - Rare instances of lua errors when accepting quests very quickly via addons like AutoTurnIn or Leatrix Plus
+  - Changed
+    - Bump TOC for 2.5.4
   - Removed
     - Deprecated code utilities
 
@@ -71,7 +75,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1-bcc...bcc
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-bcc...bcc
+[v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1...v1.2.2-bcc
 [v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1-bcc
 [v1.2.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.0.0...v1.1.0
