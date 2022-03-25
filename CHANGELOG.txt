@@ -3,11 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+
+- v1.2.3 - 2022-03-24
   - Fixed
     - Rare instances of lua errors when accepting quests very quickly via addons like AutoTurnIn or Leatrix Plus
   - Changed
     - Use AceBucket for event throttling
-    - Bump TOC for 1.14
+    - Bump TOC for 1.14.2
 
 - v1.2.2 - 2021-11-17
   - Fixed
@@ -73,9 +75,10 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2...develop
-[v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1...v1.2.2
-[v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.3-classic...classic
+[v1.2.3]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-classic...v1.2.3-classic
+[v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1-classic...v1.2.2-classic
+[v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1-classic
 [v1.2.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/releases/tag/v1.0.0
