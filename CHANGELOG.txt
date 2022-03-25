@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+  - Fixed
+    - Rare instances of lua errors when accepting quests very quickly via addons like AutoTurnIn or Leatrix Plus
+  - Changed
+    - Use AceBucket for event throttling
+    - Bump TOC for 1.14
 
 - v1.2.2 - 2021-11-17
   - Fixed
