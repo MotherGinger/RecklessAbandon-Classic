@@ -36,6 +36,8 @@ L["Individual Quests"] = true
 L["Zone Quests"] = true
 
 L["Show login message"] = true
+L["Messaging Rate"] = true
+L["Adjust the amount of messages you will receive from actions taken against your quest log.\n\n|cFF00D1FFNote:|r You will always be notified when a quest is abandoned on your behalf."] = true
 L["Show Abandon Button"] = true
 L["Show Group Abandon Button"] = true
 L["Show an abandon button for individual quests."] = true
@@ -47,9 +49,16 @@ L["Confirm group abandons"] = true
 L["Prompt for confirmation when abandoning multiple quests.\n\n|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"] = true
 
 L["Automation Options"] = true
-L["Abandon Failed Quests"] = true
-L["Automatically abandon failed quests."] = true
-L["Abandoned %s failed |4quest:quests;!"] = true
+L["These options will act upon your quest log automatically. This can save you time, however care should be taken when using them."] = true
+L["Abandon Quests"] = true
+L["Automatically abandon quests of the given type if they are included in group abandons.\n\n|cFFFF6B6BCaution:|r These quests will be abandoned for you, confirmation settings will be ignored."] = true
+L["Automatically abandoned %s |4quest:quests;!"] = true
+L["Failed"] = true
+L["Green"] = true
+L["Yellow"] = true
+L["Orange"] = true
+L["Red"] = true
+L["Gray"] = true
 
 L["Slash Commands"] = true
 L["Enable |cff888888/reckless list all|r"] = true
@@ -73,8 +82,9 @@ L["Matches all dungeon quests."] = true
 L["Matches all raid quests."] = true
 L["Matches all group quests."] = true
 L["Matches all heroic quests."] = true
-L["Matches all heroic quests."] = true
+L["Matches all elite quests."] = true
 L["Matches all pvp quests."] = true
+L["Matches all daily quests."] = true
 L["gray"] = true
 L["Matches all gray quests."] = true
 L["green"] = true
@@ -107,7 +117,7 @@ L["Automatically prune quests from the exclusion list when they are abandoned.\n
 
 L["About"] = true
 L["Testers"] = true
-L["Written by |T626001:0|t |cFF3FC7EB%s|r"] = true
+L["Written by |T626001:0|t |cFF3FC7EB%s|r aka |T626003:0|t |cFFF48CBAAllyïa-Mankrik (US)|r"] = true
 L["Please report any bugs or request features on our issue board:"] = true
 
 L["|cFFFFFF00Abandoned quest %s|r"] = true

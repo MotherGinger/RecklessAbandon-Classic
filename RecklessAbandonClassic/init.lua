@@ -118,16 +118,15 @@ function E:OnInitialize()
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 	self:RegisterEvent("PLAYER_LEVEL_UP")
-	self:RegisterBucketEvent("QUEST_LOG_UPDATE", 1, "QUEST_LOG_UPDATE")
+	self:RegisterBucketEvent("QUEST_LOG_UPDATE", 1, "GenerateQuestTable")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoAbandonQuests")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoExcludeQuests")
 	self:RegisterChatCommand("reckless", "ChatCommand")
 
 	self.loadedtime = GetTime()
 end
 
 local LoadUI = CreateFrame("Frame")
-LoadUI:RegisterEvent("QUEST_ACCEPTED")
-LoadUI:RegisterEvent("QUEST_TURNED_IN")
-LoadUI:RegisterEvent("QUEST_REMOVED")
 LoadUI:RegisterEvent("ADDON_LOADED")
 LoadUI:RegisterEvent("PLAYER_LOGIN")
 LoadUI:SetScript(
@@ -169,14 +168,6 @@ end
 function E:PLAYER_ENTERING_WORLD(event, ...)
 	E:PrintWelcomeMessage()
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-end
-
-function E:QUEST_LOG_UPDATE()
-	E:GenerateQuestTable()
-
-	if self.db.general.autoAbandonFailed then
-		E:AbandonFailedQuests()
-	end
 end
 
 function E:PLAYER_LEVEL_UP(_, arg2, ...)

@@ -36,13 +36,27 @@ E.Options.args.general = {
                         E.db.general.loginMessage = value
                     end
                 },
-                space1 = {
+                logLevel = {
                     order = 2,
+                    type = "select",
+                    name = L["Messaging Rate"],
+                    desc = L["Adjust the amount of messages you will receive from actions taken against your quest log.\n\n|cFF00D1FFNote:|r You will always be notified when a quest is abandoned on your behalf."],
+                    values = E.logLevels,
+                    width = "double",
+                    get = function(info)
+                        return E.db.general.logLevel
+                    end,
+                    set = function(info, value)
+                        E.db.general.logLevel = value
+                    end
+                },
+                space1 = {
+                    order = 3,
                     type = "description",
                     name = ""
                 },
                 confirmIndividual = {
-                    order = 3,
+                    order = 4,
                     name = L["Confirm individual abandons"],
                     desc = L["Prompt for confirmation when abandoning individual quests.\n\n|cFFFF6B6BCaution: Turning this off means a quest will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
@@ -54,7 +68,7 @@ E.Options.args.general = {
                     end
                 },
                 confirmGroup = {
-                    order = 4,
+                    order = 5,
                     name = L["Confirm group abandons"],
                     desc = L["Prompt for confirmation when abandoning multiple quests.\n\n|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"],
                     type = "toggle",
@@ -65,8 +79,13 @@ E.Options.args.general = {
                         E.db.general.confirmGroup = value
                     end
                 },
+                space2 = {
+                    order = 6,
+                    type = "description",
+                    name = "\n\n"
+                },
                 individualQuests = {
-                    order = 5,
+                    order = 7,
                     type = "group",
                     name = L["Individual Quests"],
                     inline = true,
@@ -82,11 +101,23 @@ E.Options.args.general = {
                             set = function(info, value)
                                 E.db.general.individualQuests.showAbandonButton = value
                             end
+                        },
+                        completeProtection = {
+                            order = 1,
+                            name = L["Complete Protection"],
+                            desc = L["Automatically exclude completed quests from group abandons and automation options."],
+                            type = "toggle",
+                            get = function(info)
+                                return E.db.general.individualQuests.completeProtection
+                            end,
+                            set = function(info, value)
+                                E.db.general.individualQuests.completeProtection = value
+                            end
                         }
                     }
                 },
                 zoneQuests = {
-                    order = 6,
+                    order = 8,
                     type = "group",
                     name = L["Zone Quests"],
                     inline = true,
@@ -106,20 +137,34 @@ E.Options.args.general = {
                     }
                 },
                 automationHeader = {
-                    order = 7,
+                    order = 9,
                     type = "header",
                     name = L["Automation Options"]
                 },
-                autoAbandonFailed = {
-                    order = 8,
-                    name = L["Abandon Failed Quests"],
-                    desc = L["Automatically abandon failed quests."],
-                    type = "toggle",
-                    get = function(info)
-                        return E.db.general.autoAbandonFailed
+                automationDescription = {
+                    order = 10,
+                    type = "description",
+                    name = L["These options will act upon your quest log automatically. This can save you time, however care should be taken when using them."]
+                },
+                space3 = {
+                    order = 11,
+                    type = "description",
+                    name = "\n"
+                },
+                autoAbandonQuests = {
+                    order = 12,
+                    name = L["Abandon Quests"],
+                    desc = L["Automatically abandon quests of the given type if they are included in group abandons.\n\n|cFFFF6B6BCaution:|r These quests will be abandoned for you, confirmation settings will be ignored."],
+                    type = "multiselect",
+                    values = function()
+                        local _, values = E:GetAvailableQualifiers()
+                        return values
+                    end,
+                    get = function(info, value)
+                        return E.db.general.autoAbandonQuests[value]
                     end,
                     set = function(info, value)
-                        E.db.general.autoAbandonFailed = value
+                        E.db.general.autoAbandonQuests[value] = not E.db.general.autoAbandonQuests[value]
                     end
                 }
             }

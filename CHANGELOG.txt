@@ -4,6 +4,18 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.3.0 - 2022-05-10
+  - Added
+    - New automation options for automatically abandoning quests of a given type
+    - New complete protection option for individual quests
+      - When enabled, complete protection will automatically exclude completed quests
+      - Complete protection is enabled by default
+    - Quest log dailies are now an available qualifier ("daily")
+      - Daily dungeon quests are now also considered quest log dailies
+    - New messaging rate option for adjusting how chatty Reckless Abandon is
+  - Fixed
+    - Abandoning quests with the qualifier "failed" will correctly prompt for confirmation when confirm group abandons is enabled
+
 - v1.2.2 - 2022-03-24
   - Fixed
     - Refresh config gui on cli change
@@ -75,7 +87,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-bcc...bcc
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.3.0-bcc...bcc
+[v1.3.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-bcc...v1.3.0-bcc
 [v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1...v1.2.2-bcc
 [v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1-bcc
 [v1.2.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.1.0...v1.2.0
