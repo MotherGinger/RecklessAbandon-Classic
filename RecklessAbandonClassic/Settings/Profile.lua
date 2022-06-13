@@ -11,9 +11,6 @@ P.general = {
     },
     zoneQuests = {
         showAbandonButton = true
-    },
-    autoAbandonQuests = {
-        ["*"] = false
     }
 }
 

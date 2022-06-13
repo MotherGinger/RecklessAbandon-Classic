@@ -39,7 +39,7 @@ E.Options.args.about = {
                 frauke = {
                     order = 1,
                     type = "description",
-                    name = "|T626008:0|t |cFFC69B6DFrauke-Benediction (US)|r"
+                    name = "|T626008:0|t |cFFC69B6DFrauke-Mankrik (US)|r"
                 },
                 allyia = {
                     order = 2,

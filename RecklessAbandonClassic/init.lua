@@ -121,6 +121,8 @@ function E:OnInitialize()
 	self:RegisterBucketEvent("QUEST_LOG_UPDATE", 1, "GenerateQuestTable")
 	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoAbandonQuests")
 	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoExcludeQuests")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "PruneQuestExclusionsFromAutomation")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "RefreshGUI")
 	self:RegisterChatCommand("reckless", "ChatCommand")
 
 	self.loadedtime = GetTime()

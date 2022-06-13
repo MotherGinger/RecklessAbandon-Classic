@@ -2,6 +2,17 @@ local RecklessAbandonClassic = select(2, ...)
 RecklessAbandonClassic[2] = RecklessAbandonClassic[1].Libs.ACL:GetLocale("RecklessAbandonClassic", RecklessAbandonClassic[1]:GetLocale()) -- Locale doesn't exist yet, make it exist.
 local E, L, V, P, G = unpack(RecklessAbandonClassic) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
+-- Globals
+LOG_LEVEL_SYSTEM = 0
+LOG_LEVEL_ERROR = 1
+LOG_LEVEL_WARN = 2
+LOG_LEVEL_INFO = 3
+LOG_LEVEL_VERBOSE = 4
+LOG_LEVEL_DEBUG = 5
+
+MANUAL = 0
+AUTOMATIC = 1
+
 --Lua functions
 local _G = _G
 local tonumber, pairs, ipairs, error, unpack, select, tostring = tonumber, pairs, ipairs, error, unpack, select, tostring
@@ -77,7 +88,13 @@ local questButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_ABAND
 local groupButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_GROUP_ABANDON_BUTTON")
 
 StaticPopupDialogs["RECKLESS_ABANDON_GROUP_CONFIRMATION"] = {
-	text = L["Are you sure you want to abandon all quests in |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"],
+	text = table.concat(
+		{
+			L["Are you sure you want to abandon all quests in |cFFF2E699%s|r?"],
+			L["|cFFFF6B6BThis cannot be undone.|r"]
+		},
+		"\n\n"
+	),
 	button1 = L["Yes"],
 	button2 = L["No"],
 	OnAccept = function(self, quests)
@@ -90,7 +107,13 @@ StaticPopupDialogs["RECKLESS_ABANDON_GROUP_CONFIRMATION"] = {
 }
 
 StaticPopupDialogs["RECKLESS_ABANDON_CONFIRMATION"] = {
-	text = L["Are you sure you want to abandon |cFFF2E699%s|r?\n\n|cFFFF6B6BThis cannot be undone.|r"],
+	text = table.concat(
+		{
+			L["Are you sure you want to abandon |cFFF2E699%s|r?"],
+			L["|cFFFF6B6BThis cannot be undone.|r"]
+		},
+		"\n\n"
+	),
 	button1 = L["Yes"],
 	button2 = L["No"],
 	OnAccept = function(self, data)
@@ -103,7 +126,7 @@ StaticPopupDialogs["RECKLESS_ABANDON_CONFIRMATION"] = {
 }
 
 StaticPopupDialogs["RECKLESS_ABANDON_ALL_CONFIRMATION"] = {
-	text = L["Are you sure you want to abandon all of the quests in your questlog?\n\n|cFFFF6B6BThis cannot be undone.|r"],
+	text = table.concat({L["Are you sure you want to abandon all of the quests in your questlog?"], L["|cFFFF6B6BThis cannot be undone.|r"]}, "\n\n"),
 	button1 = L["Yes"],
 	button2 = L["No"],
 	OnAccept = function(self, data)
@@ -116,7 +139,14 @@ StaticPopupDialogs["RECKLESS_ABANDON_ALL_CONFIRMATION"] = {
 }
 
 StaticPopupDialogs["RECKLESS_QUALIFIER_ABANDON_CONFIRMATION"] = {
-	text = L["Are you sure you want to abandon the following %s quests?\n\n|cFFF2E699%s|r\n\n|cFFFF6B6BThis cannot be undone.|r"],
+	text = table.concat(
+		{
+			L["Are you sure you want to abandon the following %s quests?"],
+			"|cFFF2E699%s|r",
+			L["|cFFFF6B6BThis cannot be undone.|r"]
+		},
+		"\n\n"
+	),
 	button1 = L["Yes"],
 	button2 = L["No"],
 	OnAccept = function(self, data)
@@ -238,7 +268,7 @@ function onAbandonButtonClick(self, button)
 			texture:SetVertexColor(1, 1, 1, 1)
 			self.tooltip = format(abandonTooltipFormat, self.title, L["Left Click: Abandon quest"], L["Right Click: Exclude quest from group abandons"])
 		else
-			E:ExcludeQuest(self.questId)
+			E:ExcludeQuest(self.questId, MANUAL)
 			texture:SetVertexColor(0.5, 0.5, 1, 0.7)
 			self.tooltip = format(abandonTooltipFormat, self.title, L["Left Click: Abandon quest"], L["Right Click: Include quest in group abandons"])
 		end
@@ -455,12 +485,14 @@ function E:AbandonQuest(questId, exclusionBypass)
 	end
 end
 
--- TODO: Store extra metadata in the table, indicating how it got excluded etc
-function E:ExcludeQuest(questId)
+function E:ExcludeQuest(questId, source)
 	local index = GetQuestLogIndexByID(questId)
 	local title = GetQuestLogTitle(index)
+	local source = source or MANUAL
 	self:Verbose(format(L["Excluding quest '%s' from group abandons"], title))
-	self.private.exclusions.excludedQuests[tonumber(questId)] = title
+	self.private.exclusions.excludedQuests[tonumber(questId)] = {["title"] = title, ["source"] = source}
+
+	E:RefreshGUI()
 end
 
 function E:IncludeQuest(questId)
@@ -468,6 +500,8 @@ function E:IncludeQuest(questId)
 	local title = GetQuestLogTitle(index)
 	self:Verbose(format(L["Including quest '%s' in group abandons"], title))
 	self.private.exclusions.excludedQuests[tonumber(questId)] = nil
+
+	E:RefreshGUI()
 end
 
 function E:IsExcluded(questId)
@@ -475,9 +509,11 @@ function E:IsExcluded(questId)
 end
 
 function E:PruneQuestExclusion(questId)
-	local title = E.private.exclusions.excludedQuests[tonumber(questId)]
+	local title = E.private.exclusions.excludedQuests[tonumber(questId)]["title"]
 	E.private.exclusions.excludedQuests[tonumber(questId)] = nil
 	self:Verbose(format(L["Pruning '%s' from the exclusion list"], title))
+
+	E:RefreshGUI()
 end
 
 function E:ClearQuestExclusions()
@@ -488,6 +524,22 @@ function E:ClearQuestExclusions()
 		else
 			self:IncludeQuest(questId)
 		end
+	end
+end
+
+function E:PruneQuestExclusionsFromAutomation()
+	if E.private.exclusions.autoPrune then
+		local count = 0
+		for questId, meta in pairs(E.private.exclusions.excludedQuests) do
+			local orphaned = GetQuestLogIndexByID(questId) == 0
+			local source = meta.source
+			if orphaned and source == AUTOMATIC then
+				count = count + 1
+				self:PruneQuestExclusion(questId)
+			end
+		end
+
+		self:Debug(format(L["Pruned %s automation |4orphan:orphans;!"], count))
 	end
 end
 
@@ -555,7 +607,7 @@ function E:AutoExcludeQuests()
 
 		if not isHeader then
 			if self.db.general.individualQuests.completeProtection and isComplete == 1 and not self:IsExcluded(questID) then
-				self:ExcludeQuest(questID)
+				self:ExcludeQuest(questID, AUTOMATIC)
 			end
 		end
 	end
@@ -574,8 +626,18 @@ end
 function E:NormalizeSettings()
 	-- * Verify default settings and guard against corrupted tables
 
+	-- Set log level if not set
 	if (E.db.general.logLevel == nil) then
 		E.db.general.logLevel = LOG_LEVEL_VERBOSE
+	end
+
+	-- Rebuild exclusion list
+	if (E.private.exclusions.excludedQuests ~= nil) then
+		for k, v in pairs(E.private.exclusions.excludedQuests) do
+			if (type(v) == "string") then
+				E.private.exclusions.excludedQuests[k] = {["title"] = v, ["source"] = MANUAL}
+			end
+		end
 	end
 end
 

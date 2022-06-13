@@ -3,7 +3,7 @@ local E, L = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, Profil
 local _G = _G
 
 local DEFAULT_WIDTH = 900
-local DEFAULT_HEIGHT = 650
+local DEFAULT_HEIGHT = 700
 
 local EnableAddOn = EnableAddOn
 local LoadAddOn = LoadAddOn
@@ -49,7 +49,7 @@ function E:ToggleOptionsUI(msg)
 	GameTooltip:Hide() --Just in case you're mouseovered something and it closes.
 end
 
---Function we can call on profile change to update GUI
+-- Function we can call on profile change to update GUI
 function E:RefreshGUI()
 	E.Libs.AceConfigRegistry:NotifyChange("RecklessAbandonClassic")
 end

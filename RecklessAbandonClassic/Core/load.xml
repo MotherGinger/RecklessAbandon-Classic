@@ -33,7 +33,6 @@
 		</Scripts>
 	</Button>
 
-	<Script file="Global.lua" />
 	<Script file="Core.lua" />
 	<Script file="CommandLine.lua" />
 	<Script file="Config.lua" />

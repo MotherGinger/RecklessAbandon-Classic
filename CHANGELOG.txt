@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+  - Changed
+    - Automation options are now character specific
+    - Updated the quest exclusion list
+      - The exclusion list now updates in realtime
+      - Long exclusion lists are now scrollable
+      - Added a source column
+        - Manual: The quest was manually excluded
+        - Automation: The quest was excluded by an automation option
+    - The automatic pruning option will now also prune quests excluded via automation options that are no longer in your quest log
+  - Fixed
+    - Various spanish localization strings
 
 - v1.3.0 - 2022-05-10
   - Added
