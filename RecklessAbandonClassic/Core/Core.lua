@@ -561,7 +561,7 @@ function E:AutoAbandonQuests()
 	local count = 0
 
 	for i = 1, GetNumQuestLogEntries() do
-		local title, level, questTag, isHeader, _, isComplete, isDaily, questID = GetQuestLogTitle(i)
+		local title, level, questTag, isHeader, _, isComplete, _, questID = GetQuestLogTitle(i)
 
 		if not isHeader then
 			local levelDiff = level - E.mylevel
@@ -580,10 +580,9 @@ function E:AutoAbandonQuests()
 			local failed = self.private.general.autoAbandonQuests.failed and isComplete == -1
 			local group = self.private.general.autoAbandonQuests.group and strlower(GROUP) == lowerTag
 			local pvp = self.private.general.autoAbandonQuests.pvp and strlower(PVP) == lowerTag
-			local daily = self.private.general.autoAbandonQuests.daily and isDaily == 2
 			local yellow = self.private.general.autoAbandonQuests.yellow and L["yellow"] == color
 
-			if failed or gray or heroic or raid or elite or green or orange or red or failed or group or pvp or daily or yellow then
+			if failed or gray or heroic or raid or elite or green or orange or red or failed or group or pvp or yellow then
 				-- ! This triggers a second UNIT_QUEST_LOG_CHANGED event which reattempts to abandon excluded quests
 				-- ! This is a bit spammy and needs to be throttled somehow
 				if self:AbandonQuest(questID) then
