@@ -15,7 +15,9 @@ P.general = {
 }
 
 P.commands = {
-    ["*"] = false
+    generic = {
+        ["*"] = false
+    }
 }
 
 P.debugging = {

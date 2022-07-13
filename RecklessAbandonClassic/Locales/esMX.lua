@@ -70,6 +70,9 @@ L["Yellow"] = "Amarillo"
 L["Orange"] = "Naranja"
 L["Red"] = "Rojo"
 L["Gray"] = "Gris"
+L["Quest IDs"] = "Identificadores de misiones"
+L["Enter quest ids seperated by a comma. These quests will be abandoned automatically if they are included in group abandons."] = "Ingrese los ID de búsqueda separados por una coma. Estas misiones se abandonarán automáticamente si se incluyen en los abandonos grupales."
+L["e.g. 45632,75623,23455"] = true
 
 L["Slash Commands"] = "Comandos de barra"
 L["Enable |cff888888/reckless list all|r"] = "Habilitar |cff888888/reckless list all|r"
@@ -106,6 +109,8 @@ L["orange"] = "naranja"
 L["Matches all orange quests."] = "Coincide con todas las misiones naranjas."
 L["red"] = "rojo"
 L["Matches all red quests."] = "Coincide con todas las misiones rojas."
+
+L["Generic"] = "Genérica"
 
 L["|cffffcc00%s Debug:|r"] = "|cffffcc00%s Depurar:|r"
 L["Debug Settings"] = "Configuración de depuración"

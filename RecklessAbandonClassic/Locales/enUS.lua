@@ -65,6 +65,9 @@ L["Yellow"] = true
 L["Orange"] = true
 L["Red"] = true
 L["Gray"] = true
+L["Quest IDs"] = true
+L["Enter quest ids seperated by a comma. These quests will be abandoned automatically if they are included in group abandons."] = true
+L["e.g. 45632,75623,23455"] = true
 
 L["Slash Commands"] = true
 L["Enable |cff888888/reckless list all|r"] = true
@@ -101,6 +104,8 @@ L["orange"] = true
 L["Matches all orange quests."] = true
 L["red"] = true
 L["Matches all red quests."] = true
+
+L["Generic"] = true
 
 L["|cffffcc00%s Debug:|r"] = true
 L["Debug Settings"] = true

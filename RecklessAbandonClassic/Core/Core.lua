@@ -571,21 +571,24 @@ function E:AutoAbandonQuests()
 
 			lowerTag = questTag and strlower(questTag) or nil
 
-			local failed = self.private.general.autoAbandonQuests.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
-			local gray = self.private.general.autoAbandonQuests.gray and L["gray"] == color
-			local heroic = self.private.general.autoAbandonQuests.heroic and strlower(PLAYER_DIFFICULTY2) == lowerTag
-			local raid = self.private.general.autoAbandonQuests.raid and strlower(RAID) == lowerTag
-			local elite = self.private.general.autoAbandonQuests.elite and strlower(ELITE) == lowerTag
-			local green = self.private.general.autoAbandonQuests.green and L["green"] == color
-			local orange = self.private.general.autoAbandonQuests.orange and L["orange"] == color
-			local red = self.private.general.autoAbandonQuests.red and L["red"] == color
-			local failed = self.private.general.autoAbandonQuests.failed and isComplete == -1
-			local group = self.private.general.autoAbandonQuests.group and strlower(GROUP) == lowerTag
-			local pvp = self.private.general.autoAbandonQuests.pvp and strlower(PVP) == lowerTag
-			local daily = self.private.general.autoAbandonQuests.daily and isDaily == 2
-			local yellow = self.private.general.autoAbandonQuests.yellow and L["yellow"] == color
+			local autoAbandonQuests = self.private.general.autoAbandonQuests
 
-			if failed or gray or heroic or raid or elite or green or orange or red or failed or group or pvp or daily or yellow then
+			local abandonQuestId = E:TableContainsValue({strsplit(",", autoAbandonQuests.ids)}, questID)
+			local failed = autoAbandonQuests.questType.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
+			local gray = autoAbandonQuests.questType.gray and L["gray"] == color
+			local heroic = autoAbandonQuests.questType.heroic and strlower(PLAYER_DIFFICULTY2) == lowerTag
+			local raid = autoAbandonQuests.questType.raid and strlower(RAID) == lowerTag
+			local elite = autoAbandonQuests.questType.elite and strlower(ELITE) == lowerTag
+			local green = autoAbandonQuests.questType.green and L["green"] == color
+			local orange = autoAbandonQuests.questType.orange and L["orange"] == color
+			local red = autoAbandonQuests.questType.red and L["red"] == color
+			local failed = autoAbandonQuests.questType.failed and isComplete == -1
+			local group = autoAbandonQuests.questType.group and strlower(GROUP) == lowerTag
+			local pvp = autoAbandonQuests.questType.pvp and strlower(PVP) == lowerTag
+			local daily = autoAbandonQuests.questType.daily and isDaily == 2
+			local yellow = autoAbandonQuests.questType.yellow and L["yellow"] == color
+
+			if abandonQuestId or failed or gray or heroic or raid or elite or green or orange or red or failed or group or pvp or daily or yellow then
 				-- ! This triggers a second UNIT_QUEST_LOG_CHANGED event which reattempts to abandon excluded quests
 				-- ! This is a bit spammy and needs to be throttled somehow
 				if self:AbandonQuest(questID) then
@@ -615,7 +618,7 @@ end
 
 function E:PrintWelcomeMessage()
 	if self.db.general.loginMessage then
-		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/reckless config|r to configure settings."], E.version))
+		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/ra|r to configure settings."], E.version))
 	end
 
 	if not WOW_PROJECT_ID == E.validVersion then
@@ -627,17 +630,31 @@ function E:NormalizeSettings()
 	-- * Verify default settings and guard against corrupted tables
 
 	-- Set log level if not set
-	if (E.db.general.logLevel == nil) then
+	if E.db.general.logLevel == nil then
 		E.db.general.logLevel = LOG_LEVEL_VERBOSE
 	end
 
 	-- Rebuild exclusion list
-	if (E.private.exclusions.excludedQuests ~= nil) then
+	if E.private.exclusions.excludedQuests ~= nil then
 		for k, v in pairs(E.private.exclusions.excludedQuests) do
 			if (type(v) == "string") then
 				E.private.exclusions.excludedQuests[k] = {["title"] = v, ["source"] = MANUAL}
 			end
 		end
+	end
+
+	-- Rebuild automation options
+	if E.private.general.autoAbandonQuests.questType == nil or E:IsEmpty(E.private.general.autoAbandonQuests.questType) then
+		E.private.general.autoAbandonQuests = {
+			["questType"] = E.private.general.autoAbandonQuests
+		}
+	end
+
+	-- Rebuild command settings
+	if E.db.commands.generic == nil or E:IsEmpty(E.db.commands.generic) then
+		E.db.commands = {
+			["generic"] = E.db.commands
+		}
 	end
 end
 
