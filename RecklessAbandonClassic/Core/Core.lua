@@ -571,19 +571,19 @@ function E:AutoAbandonQuests()
 
 			lowerTag = questTag and strlower(questTag) or nil
 
-			local failed = self.db.general.autoAbandonQuests.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
-			local gray = self.db.general.autoAbandonQuests.gray and L["gray"] == color
-			local heroic = self.db.general.autoAbandonQuests.heroic and strlower(PLAYER_DIFFICULTY2) == lowerTag
-			local raid = self.db.general.autoAbandonQuests.raid and strlower(RAID) == lowerTag
-			local elite = self.db.general.autoAbandonQuests.elite and strlower(ELITE) == lowerTag
-			local green = self.db.general.autoAbandonQuests.green and L["green"] == color
-			local orange = self.db.general.autoAbandonQuests.orange and L["orange"] == color
-			local red = self.db.general.autoAbandonQuests.red and L["red"] == color
-			local failed = self.db.general.autoAbandonQuests.failed and isComplete == -1
-			local group = self.db.general.autoAbandonQuests.group and strlower(GROUP) == lowerTag
-			local pvp = self.db.general.autoAbandonQuests.pvp and strlower(PVP) == lowerTag
-			local daily = self.db.general.autoAbandonQuests.daily and isDaily == 2
-			local yellow = self.db.general.autoAbandonQuests.yellow and L["yellow"] == color
+			local failed = self.private.general.autoAbandonQuests.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
+			local gray = self.private.general.autoAbandonQuests.gray and L["gray"] == color
+			local heroic = self.private.general.autoAbandonQuests.heroic and strlower(PLAYER_DIFFICULTY2) == lowerTag
+			local raid = self.private.general.autoAbandonQuests.raid and strlower(RAID) == lowerTag
+			local elite = self.private.general.autoAbandonQuests.elite and strlower(ELITE) == lowerTag
+			local green = self.private.general.autoAbandonQuests.green and L["green"] == color
+			local orange = self.private.general.autoAbandonQuests.orange and L["orange"] == color
+			local red = self.private.general.autoAbandonQuests.red and L["red"] == color
+			local failed = self.private.general.autoAbandonQuests.failed and isComplete == -1
+			local group = self.private.general.autoAbandonQuests.group and strlower(GROUP) == lowerTag
+			local pvp = self.private.general.autoAbandonQuests.pvp and strlower(PVP) == lowerTag
+			local daily = self.private.general.autoAbandonQuests.daily and isDaily == 2
+			local yellow = self.private.general.autoAbandonQuests.yellow and L["yellow"] == color
 
 			if failed or gray or heroic or raid or elite or green or orange or red or failed or group or pvp or daily or yellow then
 				-- ! This triggers a second UNIT_QUEST_LOG_CHANGED event which reattempts to abandon excluded quests
