@@ -268,7 +268,7 @@ function onAbandonButtonClick(self, button)
 			texture:SetVertexColor(1, 1, 1, 1)
 			self.tooltip = format(abandonTooltipFormat, self.title, L["Left Click: Abandon quest"], L["Right Click: Exclude quest from group abandons"])
 		else
-			E:ExcludeQuest(self.questId)
+			E:ExcludeQuest(self.questId, MANUAL)
 			texture:SetVertexColor(0.5, 0.5, 1, 0.7)
 			self.tooltip = format(abandonTooltipFormat, self.title, L["Left Click: Abandon quest"], L["Right Click: Include quest in group abandons"])
 		end
