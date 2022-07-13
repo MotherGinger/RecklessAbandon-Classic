@@ -10,8 +10,6 @@ This project adheres to Semantic Versioning.
     - New complete protection option for individual quests
       - When enabled, complete protection will automatically exclude completed quests
       - Complete protection is enabled by default
-    - Quest log dailies are now an available qualifier ("daily")
-      - Daily dungeon quests are now also considered quest log dailies
     - New messaging rate option for adjusting how chatty Reckless Abandon is
   - Changed
     - Automation options are now character specific
