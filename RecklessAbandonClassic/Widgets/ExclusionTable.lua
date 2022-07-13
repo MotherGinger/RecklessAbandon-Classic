@@ -43,7 +43,6 @@ local function CreateRow(parent)
     return row
 end
 
--- TODO: Resize the table appropriately
 local Methods = {
     OnAcquire = function(self)
         self.resizing = true

@@ -226,9 +226,6 @@ E.Options.args.general = {
                     type = "description",
                     disabled = true,
                     name = function()
-                        -- if (E:IsEmpty(E.private.exclusions.excludedQuests)) then
-                        --     return L["|cFF808080There are currently no quests being excluded.|r"]
-                        -- end
                         local exclusionTable = {{L["QuestID"], L["Source"], L["Title"]}}
 
                         for questId, meta in pairs(E.private.exclusions.excludedQuests) do
