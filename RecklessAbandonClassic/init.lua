@@ -117,17 +117,18 @@ function E:OnInitialize()
 	end
 
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:RegisterBucketEvent("QUEST_LOG_UPDATE", 1, "QUEST_LOG_UPDATE")
 	self:RegisterEvent("PLAYER_LEVEL_UP")
+	self:RegisterBucketEvent("QUEST_LOG_UPDATE", 1, "GenerateQuestTable")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoAbandonQuests")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "AutoExcludeQuests")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "PruneQuestExclusionsFromAutomation")
+	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "RefreshGUI")
 	self:RegisterChatCommand("reckless", "ChatCommand")
 
 	self.loadedtime = GetTime()
 end
 
 local LoadUI = CreateFrame("Frame")
-LoadUI:RegisterEvent("QUEST_ACCEPTED")
-LoadUI:RegisterEvent("QUEST_TURNED_IN")
-LoadUI:RegisterEvent("QUEST_REMOVED")
 LoadUI:RegisterEvent("ADDON_LOADED")
 LoadUI:RegisterEvent("PLAYER_LOGIN")
 LoadUI:SetScript(
@@ -162,6 +163,8 @@ function E:ChatCommand(input)
 	elseif cmd == "debug" then
 		E:CliToggleDebugging()
 	end
+
+	E:RefreshGUI()
 end
 
 function E:PLAYER_ENTERING_WORLD(event, ...)

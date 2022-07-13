@@ -4,6 +4,32 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.3.0 - 2022-07-12
+  - Added
+    - New automation options for automatically abandoning quests of a given type
+    - New complete protection option for individual quests
+      - When enabled, complete protection will automatically exclude completed quests
+      - Complete protection is enabled by default
+    - Quest log dailies are now an available qualifier ("daily")
+      - Daily dungeon quests are now also considered quest log dailies
+    - New messaging rate option for adjusting how chatty Reckless Abandon is
+  - Changed
+    - Automation options are now character specific
+    - Updated the quest exclusion list
+      - The exclusion list now updates in realtime
+      - Long exclusion lists are now scrollable
+      - Added a source column
+        - Manual: The quest was manually excluded
+        - Automation: The quest was excluded by an automation option
+    - The automatic pruning option will now also prune quests excluded via automation options that are no longer in your quest log
+    - Bump TOC for 1.14.3
+  - Fixed
+    - Various spanish localization strings
+    - Abandoning quests with the qualifier "failed" will correctly prompt for confirmation when confirm group abandons is enabled
+    - Refresh config gui on cli change
+  - Removed
+    - Deprecated code utilities
+
 - v1.2.3 - 2022-03-24
   - Fixed
     - Rare instances of lua errors when accepting quests very quickly via addons like AutoTurnIn or Leatrix Plus
@@ -24,10 +50,10 @@ This project adheres to Semantic Versioning.
 
 - v1.2.0 - 2021-06-19
   - Added
-    - New command line for toggling debugging
+    - Command line for toggling debugging
       - /reckless debug
       - This command is always enabled
-    - New command line for abandoning quests that match a qualifier
+    - Command line for abandoning quests that match a qualifier
       - Available qualifiers are dungeon, elite, failed, gray, green, group, heroic, orange, pvp, raid, red, yellow
         - These qualifiers are localized and will match your language
       - /reckless abandon <qualifier>
@@ -45,7 +71,7 @@ This project adheres to Semantic Versioning.
 
 - v1.1.0 - 2021-06-06
   - Added
-    - New command line for listing quests in a table
+    - Command line for listing quests in a table
       - /reckless list all
       - This command is enabled by default, and can be used in combination with other commands that require information such as questID
       - Compatibility with the addon Wide Quest List
@@ -75,7 +101,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.3-classic...classic
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.3.0-classic...classic
+[v1.3.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.3-classic...v1.3.0-classic
 [v1.2.3]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-classic...v1.2.3-classic
 [v1.2.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.1-classic...v1.2.2-classic
 [v1.2.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.0...v1.2.1-classic
