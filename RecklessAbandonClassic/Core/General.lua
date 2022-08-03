@@ -214,7 +214,7 @@ E.Options.args.general = {
                             desc = table.concat(
                                 {
                                     L["Enter quest ids seperated by a comma. These quests will be abandoned automatically if they are included in group abandons."],
-                                    L["e.g. 45632,75623,23455"]
+                                    "e.g. 4563,7562,2345"
                                 },
                                 "\n\n"
                             ),
@@ -228,7 +228,7 @@ E.Options.args.general = {
                                 -- * Replace all consecutive commas with one comma
                                 -- * Remove any trailing comma
                                 local ids = value:gsub("[^%d,]+", ""):gsub(",+", ","):gsub("^,+", ""):gsub(",*$", "")
-                                E:Debug("Auto Abandon: ", E:Dump({strsplit(",", ids)}))
+                                E:Debug(L["Auto Abandon: "], E:Dump({strsplit(",", ids)}))
                                 E.private.general.autoAbandonQuests.ids = ids
                             end
                         }
@@ -345,7 +345,7 @@ E.Options.args.general = {
                 commandsDescription = {
                     order = 1,
                     type = "description",
-                    name = L["|cFF00D1FFNote:|r The token |cff888888reckless|r can be replaced by |cff888888ra|r for all commands."]
+                    name = L["|cFF00D1FFNote:|r The token |cff888888reckless|r can be replaced by |cff888888rab|r for all commands."]
                 },
                 space1 = {
                     order = 2,

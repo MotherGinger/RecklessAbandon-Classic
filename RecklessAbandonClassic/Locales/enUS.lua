@@ -67,9 +67,9 @@ L["Red"] = true
 L["Gray"] = true
 L["Quest IDs"] = true
 L["Enter quest ids seperated by a comma. These quests will be abandoned automatically if they are included in group abandons."] = true
-L["e.g. 45632,75623,23455"] = true
 
 L["Slash Commands"] = true
+L["|cFF00D1FFNote:|r The token |cff888888reckless|r can be replaced by |cff888888rab|r for all commands."] = true
 L["Enable |cff888888/reckless list all|r"] = true
 L["This command lists all quests in a table."] = true
 L["Enable |cff888888/reckless abandon all|r"] = true
@@ -170,3 +170,8 @@ L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true
 
 L["Debugging is now on."] = true
 L["Debugging is now off."] = true
+L["Auto Abandon: "] = true
+L["Click detected"] = true
+L["%s leveled up (%d -> %d)!"] = true
+L["Quest Table: "] = true
+L["Excluded Quests: "] = true

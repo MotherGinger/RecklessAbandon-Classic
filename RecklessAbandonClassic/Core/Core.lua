@@ -247,7 +247,7 @@ function onButtonLeave(self)
 end
 
 function onAbandonButtonClick(self, button)
-	E:Debug("Click detected")
+	E:Debug(L["Click detected"])
 	if button == "LeftButton" then
 		if E.db.general.confirmIndividual then
 			local dialog = StaticPopup_Show("RECKLESS_ABANDON_CONFIRMATION", self.title)
@@ -341,7 +341,7 @@ function E:Debug(...)
 end
 
 function E:UpdatePlayerLevel(level)
-	self:Debug(format("%s leveled up (%d -> %d)!", E.myname, E.mylevel, level))
+	self:Debug(format(L["%s leveled up (%d -> %d)!"], E.myname, E.mylevel, level))
 	E.mylevel = level
 end
 
@@ -432,8 +432,8 @@ function E:GenerateQuestTable()
 		end
 	end
 
-	self:Debug("Quest Table: " .. self:Dump(questGroupsByName))
-	self:Debug("Excluded Quests: " .. self:Dump(self.private.exclusions.excludedQuests))
+	self:Debug(L["Quest Table: "] .. self:Dump(questGroupsByName))
+	self:Debug(L["Excluded Quests: "] .. self:Dump(self.private.exclusions.excludedQuests))
 end
 
 function E:AbandonAllQuests()
@@ -646,6 +646,7 @@ function E:NormalizeSettings()
 
 	-- Rebuild automation options
 	if E.private.general.autoAbandonQuests.questType == nil or E:IsEmpty(E.private.general.autoAbandonQuests.questType) then
+		E.private.general.autoAbandonQuests.questType = nil
 		E.private.general.autoAbandonQuests = {
 			["questType"] = E.private.general.autoAbandonQuests
 		}

@@ -124,7 +124,7 @@ function E:OnInitialize()
 	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "PruneQuestExclusionsFromAutomation")
 	self:RegisterBucketEvent("UNIT_QUEST_LOG_CHANGED", 0.5, "RefreshGUI")
 	self:RegisterChatCommand("reckless", "ChatCommand")
-	self:RegisterChatCommand("ra", "ChatCommand")
+	self:RegisterChatCommand("rab", "ChatCommand")
 
 	self.loadedtime = GetTime()
 end
@@ -161,10 +161,6 @@ function E:ChatCommand(input)
 		E:CliExcludeQuestById(arg1)
 	elseif cmd == "include" and tonumber(arg1) ~= nil then
 		E:CliIncludeQuestById(arg1)
-	elseif cmd == "auto" and arg1 == "abandon" and qualifiers[arg2] ~= nil then
-		E:Critical("Yesss")
-	elseif cmd == "auto" and arg1 == "abandon" and tonumber(arg2) ~= nil then
-		E:Critical("YEEE")
 	elseif cmd == "debug" then
 		E:CliToggleDebugging()
 	end
