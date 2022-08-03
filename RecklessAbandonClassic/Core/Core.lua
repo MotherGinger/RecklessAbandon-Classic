@@ -572,8 +572,9 @@ function E:AutoAbandonQuests()
 			lowerTag = questTag and strlower(questTag) or nil
 
 			local autoAbandonQuests = self.private.general.autoAbandonQuests
+			local ids = autoAbandonQuests.ids or "" -- These should never be nil, but lets guard against a corrupt config
 
-			local abandonQuestId = E:TableContainsValue({strsplit(",", autoAbandonQuests.ids)}, questID)
+			local abandonQuestId = E:TableContainsValue({strsplit(",", ids)}, questID)
 			local failed = autoAbandonQuests.questType.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
 			local gray = autoAbandonQuests.questType.gray and L["gray"] == color
 			local heroic = autoAbandonQuests.questType.heroic and strlower(PLAYER_DIFFICULTY2) == lowerTag
