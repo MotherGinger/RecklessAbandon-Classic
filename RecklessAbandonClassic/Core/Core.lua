@@ -230,12 +230,7 @@ local function ShowAbandonButtons()
 		local questIndex = i + QuestLogListScrollFrame.offset
 		if questIndex <= numEntries then
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
-			local questLogTitle = getglobal("QuestLogTitle" .. i)
-			local questTitleTag = getglobal("QuestLogTitle" .. i .. "Tag")
-			local questNumGroupMates = getglobal("QuestLogTitle" .. i .. "GroupMates")
-			local questCheck = getglobal("QuestLogTitle" .. i .. "Check")
-			local questNormalText = getglobal("QuestLogTitle" .. i .. "NormalText")
-			local questHighlight = getglobal("QuestLogTitle" .. i .. "Highlight")
+			local questLogTitle = QuestLogListScrollFrame.buttons[i]
 
 			questLogTitle:SetWidth(QuestLogListScrollFrame:GetWidth() - 50)
 
