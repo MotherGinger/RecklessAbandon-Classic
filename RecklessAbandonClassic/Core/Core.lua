@@ -571,8 +571,8 @@ function E:AutoAbandonQuests()
 
 			lowerTag = questTag and strlower(questTag) or nil
 
-			local autoAbandonQuests = self.private.general.autoAbandonQuests
-			local ids = autoAbandonQuests.ids or "" -- These should never be nil, but lets guard against a corrupt config
+			local autoAbandonQuests = self.private.automationOptions.autoAbandonQuests
+			local ids = autoAbandonQuests.ids or "" -- This should never be nil, but lets guard against a corrupt config
 
 			local abandonQuestId = E:TableContainsValue({strsplit(",", ids)}, questID)
 			local failed = autoAbandonQuests.questType.dungeon and strlower(LFG_TYPE_DUNGEON) == lowerTag
@@ -645,10 +645,10 @@ function E:NormalizeSettings()
 	end
 
 	-- Rebuild automation options
-	if E.private.general.autoAbandonQuests.questType == nil or E:IsEmpty(E.private.general.autoAbandonQuests.questType) then
-		E.private.general.autoAbandonQuests.questType = nil
-		E.private.general.autoAbandonQuests = {
-			["questType"] = E.private.general.autoAbandonQuests
+	if E.private.automationOptions.autoAbandonQuests.questType == nil or E:IsEmpty(E.private.automationOptions.autoAbandonQuests.questType) then
+		E.private.automationOptions.autoAbandonQuests.questType = nil
+		E.private.automationOptions.autoAbandonQuests = {
+			["questType"] = E.private.automationOptions.autoAbandonQuests
 		}
 	end
 
