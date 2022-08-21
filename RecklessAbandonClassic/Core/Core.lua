@@ -247,7 +247,6 @@ function onButtonLeave(self)
 end
 
 function onAbandonButtonClick(self, button)
-	E:Debug(L["Click detected"])
 	if button == "LeftButton" then
 		if E.db.general.confirmIndividual then
 			local dialog = StaticPopup_Show("RECKLESS_ABANDON_CONFIRMATION", self.title)
@@ -619,7 +618,7 @@ end
 
 function E:PrintWelcomeMessage()
 	if self.db.general.loginMessage then
-		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/ra|r to configure settings."], E.version))
+		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/rab|r to configure settings."], E.version))
 	end
 
 	if not WOW_PROJECT_ID == E.validVersion then

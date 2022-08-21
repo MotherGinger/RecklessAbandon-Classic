@@ -177,7 +177,6 @@ L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = "|cFF80808
 L["Debugging is now on."] = "La depuración está ahora activada"
 L["Debugging is now off."] = "La depuración ahora está desactivada"
 L["Auto Abandon: "] = "Abandono automático: "
-L["Click detected"] = "Clic detectado"
 L["%s leveled up (%d -> %d)!"] = "¡%s subió de nivel (%d -> %d)!"
 L["Quest Table: "] = "Tabla de misiones: "
 L["Excluded Quests: "] = "Misiones excluidas: "

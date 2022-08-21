@@ -172,7 +172,6 @@ L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true
 L["Debugging is now on."] = true
 L["Debugging is now off."] = true
 L["Auto Abandon: "] = true
-L["Click detected"] = true
 L["%s leveled up (%d -> %d)!"] = true
 L["Quest Table: "] = true
 L["Excluded Quests: "] = true
