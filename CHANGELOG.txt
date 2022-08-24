@@ -5,8 +5,10 @@ This project adheres to Semantic Versioning.
 - Unreleased
   - Added
     - New automation option for automatically abandoning a list of quest ids
-    - Commands can now be executed with /ra in addition to /reckless
-      - e.g. /ra is the same as /ra config or /reckless config
+    - Commands can now be executed with /rab in addition to /reckless
+      - e.g. /rab is the same as /rab config or /reckless config
+  - Changed
+    - Automation options are now their own tab
 
 - v1.4.1 - 2022-07-12
   - Fixed
