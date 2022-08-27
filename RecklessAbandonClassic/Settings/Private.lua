@@ -1,8 +1,11 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
-V.general = {
+V.automationOptions = {
     autoAbandonQuests = {
-        ["*"] = false
+        questType = {
+            ["*"] = false
+        },
+        ids = ""
     }
 }
 

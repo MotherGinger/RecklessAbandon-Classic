@@ -20,6 +20,11 @@ L["Are you sure you want to abandon |cFFF2E699%s|r?"] = true
 L["Are you sure you want to abandon all of the quests in your questlog?"] = true
 L["Are you sure you want to abandon the following %s quests?"] = true
 
+L["Only show messages for errors"] = true
+L["Only show messages for warnings and errors"] = true
+L["Only show important messages"] = true
+L["Show all messages (default)"] = true
+
 L["Left Click: Abandon quest"] = true
 L["Right Click: Exclude quest from group abandons"] = true
 L["Right Click: Include quest in group abandons"] = true
@@ -56,6 +61,7 @@ L["Automation Options"] = true
 L["These options will act upon your quest log automatically. This can save you time, however care should be taken when using them."] = true
 L["|cFF00D1FFNote:|r Each character has their own automation options."] = true
 L["Abandon Quests"] = true
+L["Quest Type"] = true
 L["Automatically abandon quests of the given type if they are included in group abandons."] = true
 L["|cFFFF6B6BCaution:|r These quests will be abandoned for you, confirmation settings will be ignored."] = true
 L["Automatically abandoned %s |4quest:quests;!"] = true
@@ -65,8 +71,11 @@ L["Yellow"] = true
 L["Orange"] = true
 L["Red"] = true
 L["Gray"] = true
+L["Quest IDs"] = true
+L["Enter quest ids seperated by a comma. These quests will be abandoned automatically if they are included in group abandons."] = true
 
 L["Slash Commands"] = true
+L["|cFF00D1FFNote:|r The token |cff888888reckless|r can be replaced by |cff888888rab|r for all commands."] = true
 L["Enable |cff888888/reckless list all|r"] = true
 L["This command lists all quests in a table."] = true
 L["Enable |cff888888/reckless abandon all|r"] = true
@@ -101,6 +110,8 @@ L["orange"] = true
 L["Matches all orange quests."] = true
 L["red"] = true
 L["Matches all red quests."] = true
+
+L["Generic"] = true
 
 L["|cffffcc00%s Debug:|r"] = true
 L["Debug Settings"] = true
@@ -165,3 +176,7 @@ L["|cFF808080There are no quests that match the qualifier '%s'.|r"] = true
 
 L["Debugging is now on."] = true
 L["Debugging is now off."] = true
+L["Auto Abandon: "] = true
+L["%s leveled up (%d -> %d)!"] = true
+L["Quest Table: "] = true
+L["Excluded Quests: "] = true

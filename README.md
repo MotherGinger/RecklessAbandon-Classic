@@ -10,7 +10,7 @@ A WoW Classic addon that lets you quickly (and _recklessly_) abandon quests.
 - Command line option to abandon groups of quests based on qualifiers (disabled by default)
   - Available Qualifiers: `dungeon`, `elite`, `failed`, `gray`, `green`, `group`, `heroic`, `orange`, `pvp`, `raid`, `red`, `yellow`
 - Exclude individual quests from group abandons
-- Automatically abandon failed quests (disabled by default)
+- Automatically abandon quests of certain types
 - Configuration panel to toggle confirmations and hide/show abandon buttons
 - Super tiny, less than 1MB of memory
 
