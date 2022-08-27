@@ -3,10 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+
+- v1.5.0 - 2022-08-27
   - Added
     - New automation option for automatically abandoning a list of quest ids
     - Commands can now be executed with /rab in addition to /reckless
       - e.g. /rab is the same as /rab config or /reckless config
+    - Additional spanish localization strings
   - Changed
     - Automation options are now their own tab
 
@@ -110,7 +113,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-bcc...bcc
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.0-bcc...bcc
+[v1.5.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-bcc...v1.5.0-bcc
 [v1.4.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.0-bcc...v1.4.1-bcc
 [v1.4.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.3.0-bcc...v1.4.0-bcc
 [v1.3.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.2.2-bcc...v1.3.0-bcc
