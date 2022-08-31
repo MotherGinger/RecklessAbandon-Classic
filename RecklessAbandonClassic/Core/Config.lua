@@ -56,7 +56,7 @@ end
 
 E.Libs.AceConfig:RegisterOptionsTable(E.name, E.Options)
 E.Libs.AceConfigDialog:SetDefaultSize(E.name, DEFAULT_WIDTH, DEFAULT_HEIGHT)
-E.Options.name = format("Reckless Abandon BC Classic %s", L["Configuration"])
+E.Options.name = format("Reckless Abandon Wrath Classic %s", L["Configuration"])
 E.Options.args = {
 	header = {
 		type = "header",

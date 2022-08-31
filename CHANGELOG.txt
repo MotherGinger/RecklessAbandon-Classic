@@ -4,6 +4,11 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v2.0.0 - 2022-08-30
+  - Changed
+    - Changed quest log button frame placement (Wrath API change)
+    - TOC for Wrath Classic
+
 - v1.5.1 - 2022-08-28
   - Fixed
     - Various issues where abandon buttons are sometimes unclickable
@@ -117,7 +122,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.1-bcc...bcc
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.0-wrath...wrath
+[v2.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.1-bcc...v2.0.0-wrath
 [v1.5.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.0-bcc...v1.5.1-bcc
 [v1.5.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-bcc...v1.5.0-bcc
 [v1.4.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.0-bcc...v1.4.1-bcc

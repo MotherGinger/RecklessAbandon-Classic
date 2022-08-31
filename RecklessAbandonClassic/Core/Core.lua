@@ -44,12 +44,13 @@ local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
+local _, _, _, wowTOC = GetBuildInfo()
 
 --Constants
 E.noop = function()
 end
 E.title = format("|cFF80528C%s|r", "Reckless Abandon")
-E.subtitle = format("|cFF00FF00%s|r", "BC Classic")
+E.subtitle = format("|cFF0080FF%s|r", "Wrath Classic")
 E.version = GetAddOnMetadata("RecklessAbandonClassic", "Version")
 E.author = GetAddOnMetadata("RecklessAbandonClassic", "Author")
 E.myfaction, E.myLocalizedFaction = UnitFactionGroup("player")
@@ -62,16 +63,16 @@ E.mynameRealm = format("%s - %s", E.myname, E.myrealm) -- contains spaces/dashes
 E.wowpatch, E.wowbuild = GetBuildInfo()
 E.wowbuild = tonumber(E.wowbuild)
 E.isMacClient = IsMacClient()
-E.isRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-E.isClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-E.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5
-E.validVersion = WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+E.isRetail = WOW_PROJECT_ID == (WOW_PROJECT_MAINLINE or 1)
+E.isClassic = WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2)
+E.isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5) and wowTOC < 30000
+E.isWrath = WOW_PROJECT_ID == 5 and wowTOC >= 30000
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
 E.wowVersionMatrix = {
 	[WOW_PROJECT_MAINLINE] = "Retail",
 	[WOW_PROJECT_CLASSIC] = "Classic Era",
-	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5] = "Burning Crusade Classic"
+	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = "Wrath of the Lich King Classic"
 }
 E.logLevels = {
 	[LOG_LEVEL_ERROR] = L["Only show messages for errors"],
@@ -635,8 +636,8 @@ function E:PrintWelcomeMessage()
 		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/rab|r to configure settings."], E.version))
 	end
 
-	if not WOW_PROJECT_ID == E.validVersion then
-		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], E.wowVersionMatrix[E.validVersion], E.wowVersionMatrix[WOW_PROJECT_ID]))
+	if not E.isWrath then
+		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], "Wrath of the Lich King Classic", E.wowVersionMatrix[WOW_PROJECT_ID]))
 	end
 end
 
