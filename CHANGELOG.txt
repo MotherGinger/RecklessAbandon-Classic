@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v2.0.2 - 2022-09-13
+  - Fixed
+    - Button rendering when scrolling the quest frame (Wrath API change)
+
 - v2.0.1 - 2022-09-02
   - Fixed
     - Lua errors related to wow project ids (Wrath API change)
@@ -126,7 +130,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.1-wrath...wrath
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.2-wrath...wrath
+[v2.0.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.1-wrath...v2.0.2-wrath
 [v2.0.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.0-wrath...v2.0.1-wrath
 [v2.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.1-bcc...v2.0.0-wrath
 [v1.5.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.0-bcc...v1.5.1-bcc
