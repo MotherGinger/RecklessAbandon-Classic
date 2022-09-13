@@ -1,8 +1,26 @@
 local E, L = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
+local _G = _G
+
 ----------------------------------------------------------------
 ----------------------- Commands -------------------------------
 ----------------------------------------------------------------
+
+function E:CliDump(obj)
+    local val = _G[obj]
+
+    if val == nil then
+        E:Info(obj)
+
+        return
+    end
+
+    if type(val) == "table" then
+        E:Info(E:Dump(val))
+    else
+        E:Info(val)
+    end
+end
 
 function E:CliToggleDebugging()
     self.db.debugging.debugLogging = not self.db.debugging.debugLogging

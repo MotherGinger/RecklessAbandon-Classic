@@ -19,6 +19,7 @@ local tonumber, pairs, ipairs, error, unpack, select, tostring = tonumber, pairs
 local gsub, strjoin, twipe, tinsert, tremove, tContains = gsub, strjoin, wipe, tinsert, tremove, tContains
 local format, find, strrep, strlen, sub = format, strfind, strrep, strlen, strsub
 local assert, type, pcall, xpcall, next, print = assert, type, pcall, xpcall, next, print
+local floor = floor
 
 --WoW API / Variables
 local CreateFrame = CreateFrame
@@ -228,7 +229,7 @@ local function ShowAbandonButtons()
 
 	local numEntries, numQuests = GetNumQuestLogEntries()
 	for i = 1, QUESTS_DISPLAYED do
-		local questIndex = i + QuestLogListScrollFrame.offset
+		local questIndex = floor(i + QuestLogListScrollFrame.offset)
 		if questIndex <= numEntries then
 			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
 			local questLogTitle = QuestLogListScrollFrame.buttons[i]
@@ -696,8 +697,8 @@ function E:Initialize()
 	QuestLogFrame:HookScript("OnEvent", ShowAbandonButtons)
 	QuestLogFrame:HookScript("OnHide", HideAbandonButtons)
 
-	QuestLogListScrollFrame:HookScript(
-		"OnVerticalScroll",
+	QuestLogListScrollFrame.scrollBar:HookScript(
+		"OnValueChanged",
 		function()
 			-- Render the next set of buttons. This is needed because the classic quest log only shows QUESTS_DISPLAYED titles at a time
 			ShowAbandonButtons()

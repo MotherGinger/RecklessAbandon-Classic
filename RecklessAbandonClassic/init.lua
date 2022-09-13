@@ -163,6 +163,8 @@ function E:ChatCommand(input)
 		E:CliIncludeQuestById(arg1)
 	elseif cmd == "debug" then
 		E:CliToggleDebugging()
+	elseif cmd == "dump" and arg1 ~= nil then
+		E:CliDump(arg1)
 	end
 
 	E:RefreshGUI()
