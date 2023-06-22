@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v2.0.4 - 2023-06-21
+  - Changed
+    - Bump TOC for 3.4.2
+
 - v2.0.3 - 2023-01-18
   - Changed
     - Bump TOC for 3.4.1
@@ -134,7 +138,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.3-wrath...wrath
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.4-wrath...wrath
+[v2.0.4]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.3-wrath...v2.0.4-wrath
 [v2.0.3]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.2-wrath...v2.0.3-wrath
 [v2.0.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.1-wrath...v2.0.2-wrath
 [v2.0.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.0-wrath...v2.0.1-wrath

@@ -1,6 +1,6 @@
-## Interface: 30401
+## Interface: 30402
 ## Author: Arrila-Thrall (US)
-## Version: 2.0.3
+## Version: 2.0.4
 ## Title: |cFF80528CReckless Abandon|r |cFF0080FFWrath Classic|r
 ## Notes: A tool for quickly (and recklessly) abandoning quests
 ## SavedVariables: RecklessAbandonClassicDB, RecklessAbandonClassicPrivateDB
