@@ -4,6 +4,11 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.4.2 - 2023-08-22
+  - Changed
+    - Bump TOC for 1.14.4
+    - Upgrade Ace Libraries
+
 - v1.4.1 - 2022-08-28
   - Fixed
     - Various issues where abandon buttons are sometimes unclickable
@@ -126,7 +131,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-classic...classic
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.2-classic...classic
+[v1.4.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-classic...v1.4.2-classic
 [v1.4.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.0-classic...v1.4.1-classic
 [v1.4.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.3.1-classic...v1.4.0-classic
 [v1.3.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.3.0-classic...v1.3.1-classic
