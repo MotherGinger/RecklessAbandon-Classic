@@ -254,6 +254,58 @@ local function HideAbandonButtons()
 	groupButtonPool:ReleaseAll()
 end
 
+local function onQuestLogEntryMouseDown(self, button)
+	local title, _, _, isHeader, _, _, _, questID = GetQuestLogTitle(self:GetID())
+	local abandonQuestBinding = E.db.general.individualQuests.abandonBinding
+	local excludeQuestBinding = E.db.general.individualQuests.excludeBinding
+	local includeQuestBinding = E.db.general.individualQuests.includeBinding
+	local groupAbandonQuestBinding = E.db.general.zoneQuests.abandonBinding
+
+	if button == "LeftButton" then
+		button = "BUTTON1"
+	elseif button == "RightButton" then
+		button = "BUTTON2"
+	elseif button == "MiddleButton" then
+		button = "BUTTON3"
+	elseif button == "Button4" then
+		button = "BUTTON4"
+	elseif button == "Button5" then
+		button = "BUTTON5"
+	end
+
+	if IsShiftKeyDown() then
+		button = "SHIFT-" .. button
+	end
+
+	if IsControlKeyDown() then
+		button = "CTRL-" .. button
+	end
+
+	if IsAltKeyDown() then
+		button = "ALT-" .. button
+	end
+
+	if isHeader and button == groupAbandonQuestBinding then
+		E:AbandonZoneQuests(getKey(title))
+		E:Debug(format(L["%s abandoned via keybinding (%s)"], title, button))
+	elseif button == abandonQuestBinding then
+		E:AbandonQuest(questID)
+		E:Debug(format(L["%s abandoned via keybinding (%s)"], title, button))
+	elseif button == excludeQuestBinding then
+		E:ExcludeQuest(questID, MANUAL)
+		ShowAbandonButtons()
+		E:Debug(format(L["%s excluded via keybinding (%s)"], title, button))
+	elseif button == includeQuestBinding then
+		E:IncludeQuest(questID)
+		ShowAbandonButtons()
+		E:Debug(format(L["%s included via keybinding (%s)"], title, button))
+	end
+
+	if self.origOnMouseDown then
+		self:origOnMouseDown(button)
+	end
+end
+
 function onButtonEnter(self)
 	GameTooltip:SetOwner(self)
 	GameTooltip:SetText(self.tooltip)
@@ -676,6 +728,20 @@ function E:NormalizeSettings()
 	end
 end
 
+function E:RegisterHotkeys()
+	for i = 1, GetNumQuestLogEntries() do
+		local questLogTitle = getglobal("QuestLogTitle" .. i)
+
+		if questLogTitle and not questLogTitle.hasOnMouseDownScript then
+			questLogTitle.origOnMouseDown = questLogTitle:GetScript("OnMouseDown")
+
+			questLogTitle:SetScript("OnMouseDown", onQuestLogEntryMouseDown)
+
+			questLogTitle.hasOnMouseDownScript = true
+		end
+	end
+end
+
 function E:Initialize()
 	twipe(E.db)
 	twipe(E.global)
@@ -694,8 +760,20 @@ function E:Initialize()
 
 	E:NormalizeSettings()
 
-	QuestLogFrame:HookScript("OnShow", ShowAbandonButtons)
-	QuestLogFrame:HookScript("OnEvent", ShowAbandonButtons)
+	QuestLogFrame:HookScript(
+		"OnShow",
+		function()
+			ShowAbandonButtons()
+			E:RegisterHotkeys()
+		end
+	)
+	QuestLogFrame:HookScript(
+		"OnEvent",
+		function()
+			ShowAbandonButtons()
+			E:RegisterHotkeys()
+		end
+	)
 	QuestLogFrame:HookScript("OnHide", HideAbandonButtons)
 
 	QuestLogListScrollFrame:HookScript(
@@ -703,6 +781,7 @@ function E:Initialize()
 		function()
 			-- Render the next set of buttons. This is needed because the classic quest log only shows QUESTS_DISPLAYED titles at a time
 			ShowAbandonButtons()
+			E:RegisterHotkeys()
 
 			for button in questButtonPool:EnumerateActive() do
 				onButtonUpdate(button)
