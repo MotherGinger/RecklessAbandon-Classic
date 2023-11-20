@@ -56,7 +56,7 @@ Engine[5] = E.DF.global
 _G.RecklessAbandonClassic = Engine
 
 do
-	local convert = {enGB = "enUS", esES = "esMX", itIT = "enUS"}
+	local convert = {enGB = "enUS", esES = "esMX", itIT = "enUS", zhTW = "zhCN"}
 	local gameLocale = convert[E.locale] or E.locale or "enUS"
 
 	function E:GetLocale()
