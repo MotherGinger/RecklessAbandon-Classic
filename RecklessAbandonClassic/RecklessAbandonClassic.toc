@@ -1,8 +1,17 @@
 ## Interface: 30403
 ## Author: Arrila-Thrall (US)
-## Version: 2.1.0-beta.1
+## Version: 2.1.0-beta.2
 ## Title: |cFF80528CReckless Abandon|r |cFF0080FFWrath Classic|r
 ## Notes: A tool for quickly (and recklessly) abandoning quests
+## Notes-esES: Una herramienta para abandonar misiones rápidamente (y sin escrúpulos)
+## Notes-esMX: Una herramienta para abandonar misiones rápidamente (y sin escrúpulos)
+## Notes-deDE: Ein Werkzeug zum schnellen (und rücksichtslosen) Abbrechen von Quests
+## Notes-frFR: Un outil pour abandonner rapidement (et imprudemment) des quêtes
+## Notes-ruRU: Инструмент для быстрого (и беспечного) отказа от заданий
+## Notes-itIT: Uno strumento per abbandonare rapidamente (e imprudentemente) le missioni
+## Notes-ptBR: Uma ferramenta para abandonar missões rapidamente (e imprudentemente)
+## Notes-zhCN: 一个快速（且鲁莽）放弃任务的工具
+## Notes-zhTW: 一個快速（且魯莽）放棄任務的工具
 ## SavedVariables: RecklessAbandonClassicDB, RecklessAbandonClassicPrivateDB
 ## SavedVariablesPerCharacter: RecklessAbandonClassicCharacterDB
 
