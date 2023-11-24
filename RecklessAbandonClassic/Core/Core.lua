@@ -285,9 +285,8 @@ end
 local function onQuestLogEntryClick(self, button, down)
 	local abandonQuestBinding = E.db.general.individualQuests.abandonBinding
 	local excludeQuestBinding = E.db.general.individualQuests.excludeBinding
-	local includeQuestBinding = E.db.general.individualQuests.includeBinding
 	local binding = getKeybinding(button)
-	local isBound = (isHeader and binding == groupAbandonQuestBinding) or binding == abandonQuestBinding or binding == excludeQuestBinding or binding == includeQuestBinding
+	local isBound = (isHeader and binding == groupAbandonQuestBinding) or binding == abandonQuestBinding or binding == excludeQuestBinding
 
 	-- * If the click matches a binding, disable default behaviors
 	-- * In retail this prevents things like the right click context menu or the full page quest description
@@ -300,7 +299,6 @@ local function onQuestLogEntryMouseDown(self, button)
 	local title, _, _, isHeader, _, _, _, questID = GetQuestLogTitle(self:GetID())
 	local abandonQuestBinding = E.db.general.individualQuests.abandonBinding
 	local excludeQuestBinding = E.db.general.individualQuests.excludeBinding
-	local includeQuestBinding = E.db.general.individualQuests.includeBinding
 	local groupAbandonQuestBinding = E.db.general.zoneQuests.abandonBinding
 	local binding = getKeybinding(button)
 
@@ -327,13 +325,17 @@ local function onQuestLogEntryMouseDown(self, button)
 		end
 		E:Debug(format(L["%s abandoned via keybinding (%s)"], title, binding))
 	elseif binding == excludeQuestBinding then
-		E:ExcludeQuest(questID, MANUAL)
+		local excluded = E:IsExcluded(questID)
+
+		if excluded then
+			E:IncludeQuest(questID)
+			E:Debug(format(L["%s included via keybinding (%s)"], title, binding))
+		else
+			E:ExcludeQuest(questID, MANUAL)
+			E:Debug(format(L["%s excluded via keybinding (%s)"], title, binding))
+		end
+
 		ShowAbandonButtons()
-		E:Debug(format(L["%s excluded via keybinding (%s)"], title, binding))
-	elseif binding == includeQuestBinding then
-		E:IncludeQuest(questID)
-		ShowAbandonButtons()
-		E:Debug(format(L["%s included via keybinding (%s)"], title, binding))
 	end
 
 	if self.origOnMouseDown then
