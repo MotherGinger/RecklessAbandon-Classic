@@ -1,5 +1,5 @@
 -- Spanish localization file for esMX and esES.
-local E = unpack(select(2, ...)) -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E = unpack(RecklessAbandonClassic) -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = E.Libs.ACL:NewLocale("RecklessAbandonClassic", "esMX")
 
 if not L then
@@ -53,6 +53,8 @@ L["Adjust the amount of messages you will receive from actions taken against you
 L["|cFF00D1FFNote:|r You will always be notified when a quest is abandoned on your behalf."] = "|cFF00D1FFNota:|r Siempre se te notificará cuando se abandone una misión en tu nombre."
 L["Show Abandon Button"] = "Mostrar botón de abandono"
 L["Show Group Abandon Button"] = "Mostrar botón de abandono de grupo"
+L["Complete Protection"] = "Protección Completa"
+L["Automatically exclude completed quests from group abandons and automation options."] = "Excluir automáticamente las misiones completadas de las abandonos grupales y opciones de automatización."
 L["Show an abandon button for individual quests."] = "Muestra un botón de abandono para misiones individuales."
 L["Abandon Quest"] = "Abandonar misión"
 L["Use this keybinding on a quest in your quest log to abandon it."] = "Usa esta combinación de teclas en una misión de tu registro de misiones para abandonarla."
@@ -76,7 +78,7 @@ L["Prompt for confirmation when abandoning multiple quests."] = "Solicitar confi
 L["|cFFFF6B6BCaution: Turning this off means a group of quests will be abandoned instantly. Be careful!|r"] = "|cFFFF6B6BPrecaución: Desactivar esto significa que un grupo de misiones se abandonará instantáneamente. ¡Ten cuidado!|r"
 
 L["Automation Options"] = "Opciones de automatización"
-L["These options will act upon your quest log automatically. This can save you time, however care should be taken when using them."] = "Estas opciones actuarán sobre tu registro de misiones automáticamente. Esto puede ahorrarte tiempo, sin embargo, debes tener cuidado al usarlas."
+L["These options will act upon your quest log automatically. This can save you time, however, care should be taken when using them."] = "Estas opciones actuarán sobre tu registro de misiones automáticamente. Esto puede ahorrarte tiempo, sin embargo, debes tener cuidado al usarlas."
 L["|cFF00D1FFNote:|r Each character has their own automation options."] = "|cFF00D1FFNote:|r Cada personaje tiene sus propias opciones de automatización."
 L["Abandon Quests"] = "Abandonar misiones"
 L["Quest Type"] = "Tipo de misión"
