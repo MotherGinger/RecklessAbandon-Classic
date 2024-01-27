@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to Semantic Versioning.
 
 - Unreleased
+
+- v2.1.0 - 2024-01-26
   - Added
     - Configuration options for abandoning, excluding, and including quests via keybindings in your quest log
     - New Localizations
@@ -159,7 +161,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.6-wrath...wrath
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.1.0-wrath...wrath
+[v2.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.6-wrath...v2.1.0-wrath
 [v2.0.6]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.5-wrath...v2.0.6-wrath
 [v2.0.5]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.4-wrath...v2.0.5-wrath
 [v2.0.4]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.3-wrath...v2.0.4-wrath
