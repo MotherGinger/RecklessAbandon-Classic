@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.5.1 - 2024-02-08
+  - Changed
+    - Bump TOC for 1.15.1
+
 - v1.5.0 - 2024-01-26
   - Added
     - Configuration options for abandoning, excluding, and including quests via keybindings in your quest log
@@ -150,7 +154,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.0-classic...classic
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.1-classic...classic
+[v1.5.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.0-classic...v1.5.1-classic
 [v1.5.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.3-classic...v1.5.0-classic
 [v1.4.3]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.2-classic...v1.4.3-classic
 [v1.4.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.4.1-classic...v1.4.2-classic
