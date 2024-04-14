@@ -1,7 +1,7 @@
-## Interface: 30403
+## Interface: 40400
 ## Author: Arrila-Thrall (US)
-## Version: 2.1.0
-## Title: |cFF80528CReckless Abandon|r |cFF0080FFWrath Classic|r
+## Version: 3.0.0
+## Title: |cFF80528CReckless Abandon|r |cFFFF7C0ACata Classic|r
 ## Notes: A tool for quickly (and recklessly) abandoning quests
 ## Notes-esES: Una herramienta para abandonar misiones rápidamente (y sin escrúpulos)
 ## Notes-esMX: Una herramienta para abandonar misiones rápidamente (y sin escrúpulos)

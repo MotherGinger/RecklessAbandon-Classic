@@ -33,6 +33,11 @@ local GetQuestLogIndexByID = GetQuestLogIndexByID
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
 local GetAddOnEnableState = GetAddOnEnableState
+local GetQuestLink = GetQuestLink
+local CanAbandonQuest = CanAbandonQuest
+local SelectQuestLogEntry = SelectQuestLogEntry
+local SetAbandonQuest = SetAbandonQuest
+local AbandonQuest = AbandonQuest
 local IsInGroup = IsInGroup
 local IsInGuild = IsInGuild
 local IsInRaid = IsInRaid
@@ -50,7 +55,7 @@ local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 E.noop = function()
 end
 E.title = format("|cFF80528C%s|r", "Reckless Abandon")
-E.subtitle = format("|cFF0080FF%s|r", "Wrath Classic")
+E.subtitle = format("|cFFFF7C0A%s|r", "Cata Classic")
 E.version = GetAddOnMetadata("RecklessAbandonClassic", "Version")
 E.author = GetAddOnMetadata("RecklessAbandonClassic", "Author")
 E.myfaction, E.myLocalizedFaction = UnitFactionGroup("player")
@@ -67,13 +72,15 @@ E.isRetail = WOW_PROJECT_ID == (WOW_PROJECT_MAINLINE or 1)
 E.isClassic = WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2)
 E.isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5)
 E.isWrath = WOW_PROJECT_ID == (WOW_PROJECT_WRATH_CLASSIC or 11)
+E.isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATACLYSM_CLASSIC or 12) --TODO
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
 E.wowVersionMatrix = {
 	[WOW_PROJECT_MAINLINE] = "Retail",
 	[WOW_PROJECT_CLASSIC] = "Classic Era",
 	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = "Burning Crusade Classic",
-	[WOW_PROJECT_WRATH_CLASSIC] = "Wrath of the Lich King Classic"
+	[WOW_PROJECT_WRATH_CLASSIC] = "Wrath of the Lich King Classic",
+	[WOW_PROJECT_CATACLYSM_CLASSIC] = "Cataclysm Classic" -- TODO
 }
 E.logLevels = {
 	[LOG_LEVEL_ERROR] = L["Only show messages for errors"],
@@ -88,6 +95,24 @@ local questGroupsByName = {}
 -- TODO: We might want to create custom textures for each type
 local questButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_ABANDON_BUTTON")
 local groupButtonPool = CreateFramePool("Button", QuestLogFrame, "RECKLESS_GROUP_ABANDON_BUTTON")
+
+local MyScanningTooltip = CreateFrame("GameTooltip", "MyScanningTooltip", UIParent, "GameTooltipTemplate")
+local QuestTitleFromID =
+	setmetatable(
+	{},
+	{
+		__index = function(t, id)
+			MyScanningTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+			MyScanningTooltip:SetHyperlink("quest:" .. id)
+			local title = MyScanningTooltipTextLeft1:GetText()
+			MyScanningTooltip:Hide()
+			if title and title ~= RETRIEVING_DATA then
+				t[id] = title
+				return title
+			end
+		end
+	}
+)
 
 StaticPopupDialogs["RECKLESS_ABANDON_GROUP_CONFIRMATION"] = {
 	text = table.concat(
@@ -199,6 +224,8 @@ local function RenderAbandonButton(parent, offset, questId, excluded, title, too
 	tooltip = tooltip or format(abandonTooltipFormat, title, L["Left Click: Abandon quest"], (excluded and L["Right Click: Include quest in group abandons"] or L["Right Click: Exclude quest from group abandons"]))
 
 	local button = questButtonPool:Acquire()
+	local canAbandon = CanAbandonQuest(questId)
+
 	local ntex = button:GetNormalTexture()
 	local ptex = button:GetPushedTexture()
 	local htex = button:GetHighlightTexture()
@@ -210,14 +237,17 @@ local function RenderAbandonButton(parent, offset, questId, excluded, title, too
 	button.title = title
 	button.tooltip = tooltip
 	button.questId = questId
-	button:SetPoint("CENTER", parent, "CENTER", offset, 0)
 
-	if excluded then
+	ntex:SetDesaturated(not canAbandon)
+
+	if canAbandon and excluded then
 		ntex:SetVertexColor(0.5, 0.5, 1, 0.7)
 	else
 		ntex:SetVertexColor(1, 1, 1, 1)
 	end
 
+	button:SetPoint("CENTER", parent, "CENTER", offset, 0)
+	button:SetEnabled(canAbandon)
 	button:SetNormalTexture(ntex)
 	button:SetPushedTexture(ptex)
 	button:SetHighlightTexture(htex)
@@ -231,6 +261,9 @@ local function RenderGroupAbandonButton(parent, offset, title, tooltip, key)
 
 	if questGroupsByName[key] then
 		local button = groupButtonPool:Acquire()
+		local hasQuests = not E:IsEmpty(questGroupsByName[key].quests)
+		local canAbandonAny = E:CanQuestGroupAbandon(questGroupsByName[key].quests)
+
 		local ntex = button:GetNormalTexture()
 		local ptex = button:GetPushedTexture()
 		local htex = button:GetHighlightTexture()
@@ -244,6 +277,7 @@ local function RenderGroupAbandonButton(parent, offset, title, tooltip, key)
 		button.key = key
 
 		button:SetPoint("CENTER", parent, "CENTER", offset, 0)
+		button:SetEnabled(hasQuests and canAbandonAny)
 		button:SetNormalTexture(ntex)
 		button:SetPushedTexture(ptex)
 		button:SetHighlightTexture(htex)
@@ -255,20 +289,23 @@ local function ShowAbandonButtons()
 	questButtonPool:ReleaseAll()
 	groupButtonPool:ReleaseAll()
 
-	local numEntries, numQuests = GetNumQuestLogEntries()
-	for i = 1, QUESTS_DISPLAYED do
-		local questIndex = floor(i + QuestLogListScrollFrame.offset)
-		if questIndex <= numEntries then
-			local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
-			local questLogTitle = QuestLogListScrollFrame.buttons[i]
+	-- Guard against a bad cache (https://github.com/MotherGinger/RecklessAbandon/issues/25)
+	if E.db ~= nil and E.db.general ~= nil then
+		local numEntries, numQuests = GetNumQuestLogEntries()
+		for i = 1, QUESTS_DISPLAYED do
+			local questIndex = floor(i + QuestLogListScrollFrame.offset)
+			if questIndex <= numEntries then
+				local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questIndex)
+				local questLogTitle = QuestLogListScrollFrame.buttons[i]
 
-			questLogTitle:SetWidth(QuestLogListScrollFrame:GetWidth() - 50)
+				questLogTitle:SetWidth(QuestLogListScrollFrame:GetWidth() - 50)
 
-			if isHeader and E.db.general.zoneQuests.showAbandonButton then
-				RenderGroupAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 138, title)
-			elseif not isHeader and E.db.general.individualQuests.showAbandonButton then
-				local excluded = E:IsExcluded(questID)
-				RenderAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 163, questID, excluded, title)
+				if isHeader and E.db.general.zoneQuests.showAbandonButton then
+					RenderGroupAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 138, title)
+				elseif not isHeader and E.db.general.individualQuests.showAbandonButton then
+					local excluded = E:IsExcluded(questID)
+					RenderAbandonButton(questLogTitle, QuestLogListScrollFrame:GetWidth() - 163, questID, excluded, title)
+				end
 			end
 		end
 	end
@@ -572,19 +609,21 @@ function E:AbandonQuest(questId, exclusionBypass)
 	local title = GetQuestLogTitle(logIndex)
 
 	if exclusionBypass or not self.private.exclusions.excludedQuests[questId] then
-		SelectQuestLogEntry(logIndex)
-		SetAbandonQuest()
-		AbandonQuest()
+		if CanAbandonQuest(questId) then
+			SelectQuestLogEntry(logIndex)
+			SetAbandonQuest()
+			AbandonQuest()
 
-		self:System(format(L["|cFFFFFF00Abandoned quest '%s'|r"], title))
+			self:System(format(L["|cFFFFFF00Abandoned quest %s|r"], GetQuestLink(questId)))
 
-		if E.private.exclusions.autoPrune and self:IsExcluded(questId) then
-			self:PruneQuestExclusion(questId)
+			if E.private.exclusions.autoPrune and self:IsExcluded(questId) then
+				self:PruneQuestExclusion(questId)
+			end
+		else
+			self:Warn(format(L["|cFFFFFF00You can't abandon %s|r"], GetQuestLink(questId)))
 		end
-
-		return true
 	else
-		self:Verbose(format(L["Skipping '%s' since it is excluded from group abandons"], title))
+		self:Verbose(format(L["Skipping %s since it is excluded from group abandons"], GetQuestLink(questId)))
 		return false
 	end
 end
@@ -593,7 +632,7 @@ function E:ExcludeQuest(questId, source)
 	local index = GetQuestLogIndexByID(questId)
 	local title = GetQuestLogTitle(index)
 	local source = source or MANUAL
-	self:Verbose(format(L["Excluding quest '%s' from group abandons"], title))
+	self:Verbose(format(L["Excluding quest %s from group abandons"], GetQuestLink(questId)))
 	self.private.exclusions.excludedQuests[tonumber(questId)] = {["title"] = title, ["source"] = source}
 
 	E:RefreshGUI()
@@ -602,7 +641,7 @@ end
 function E:IncludeQuest(questId)
 	local index = GetQuestLogIndexByID(questId)
 	local title = GetQuestLogTitle(index)
-	self:Verbose(format(L["Including quest '%s' in group abandons"], title))
+	self:Verbose(format(L["Including quest %s in group abandons"], GetQuestLink(questId)))
 	self.private.exclusions.excludedQuests[tonumber(questId)] = nil
 
 	E:RefreshGUI()
@@ -610,6 +649,32 @@ end
 
 function E:IsExcluded(questId)
 	return self.private.exclusions.excludedQuests[tonumber(questId)] ~= nil
+end
+
+function E:CanQuestGroupAbandon(quests)
+	for questId, _ in pairs(quests) do
+		if CanAbandonQuest(questId) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function E:PruneQuestExclusionsFromAutomation()
+	if E.private.exclusions.autoPrune then
+		local count = 0
+		for questId, meta in pairs(E.private.exclusions.excludedQuests) do
+			local orphaned = GetQuestLogIndexByID(questId) == 0
+			local source = meta.source
+			if orphaned and source == AUTOMATIC then
+				count = count + 1
+				self:PruneQuestExclusion(questId)
+			end
+		end
+
+		self:Debug(format(L["Pruned %s automation |4orphan:orphans;!"], count))
+	end
 end
 
 function E:PruneQuestExclusion(questId)
@@ -628,22 +693,6 @@ function E:ClearQuestExclusions()
 		else
 			self:IncludeQuest(questId)
 		end
-	end
-end
-
-function E:PruneQuestExclusionsFromAutomation()
-	if E.private.exclusions.autoPrune then
-		local count = 0
-		for questId, meta in pairs(E.private.exclusions.excludedQuests) do
-			local orphaned = GetQuestLogIndexByID(questId) == 0
-			local source = meta.source
-			if orphaned and source == AUTOMATIC then
-				count = count + 1
-				self:PruneQuestExclusion(questId)
-			end
-		end
-
-		self:Debug(format(L["Pruned %s automation |4orphan:orphans;!"], count))
 	end
 end
 
@@ -726,8 +775,8 @@ function E:PrintWelcomeMessage()
 		self:System(format(L["You are running |cFFB5FFEBv%s|r. Type |cff888888/rab|r to configure settings."], E.version))
 	end
 
-	if not E.isWrath then
-		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], E.wowVersionMatrix[WOW_PROJECT_WRATH_CLASSIC or 11], E.wowVersionMatrix[WOW_PROJECT_ID]))
+	if not E.isCata then
+		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], E.wowVersionMatrix[WOW_PROJECT_CATACLYSM_CLASSIC or 12], E.wowVersionMatrix[WOW_PROJECT_ID]))
 	end
 end
 

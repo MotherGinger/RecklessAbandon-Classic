@@ -163,6 +163,7 @@ L["Written by |T626001:0|t |cFF3FC7EB%s|r aka |T626003:0|t |cFFF48CBAAllyïa-Man
 L["Please report any bugs or request features on our issue board:"] = "请在我们的问题板上报告任何错误或请求功能："
 
 L["|cFFFFFF00Abandoned quest %s|r"] = "|cFFFFFF00放弃了任务 %s|r"
+L["|cFFFFFF00You can't abandon %s|r"] = "|cFFFFFF00你不能放弃 %s|r"
 
 L["Skipping '%s' since it is excluded from group abandons"] = "跳过 '%s'，因为它被从组放弃中排除"
 L["Excluding quest '%s' from group abandons"] = "将任务 '%s' 从组放弃中排除"

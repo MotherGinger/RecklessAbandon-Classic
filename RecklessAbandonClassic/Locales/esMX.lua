@@ -164,6 +164,7 @@ L["Written by |T626001:0|t |cFF3FC7EB%s|r aka |T626003:0|t |cFFF48CBAAllyïa-Man
 L["Please report any bugs or request features on our issue board:"] = "Informe cualquier error o solicite funciones en nuestro tablero de problemas:"
 
 L["|cFFFFFF00Abandoned quest %s|r"] = "|cFFFFFF00Misión abandonada %s|r"
+L["|cFFFFFF00You can't abandon %s|r"] = "|cFFFFFF00No puedes abandonar %s|r"
 
 L["Skipping '%s' since it is excluded from group abandons"] = "Omitiendo '%s' ya que está excluido de los abandonos grupales"
 L["Excluding quest '%s' from group abandons"] = "Excluyendo la misión '%s' de abandonos grupales"

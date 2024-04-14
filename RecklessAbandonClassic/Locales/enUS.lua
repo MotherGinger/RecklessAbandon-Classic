@@ -159,6 +159,7 @@ L["Written by |T626001:0|t |cFF3FC7EB%s|r aka |T626003:0|t |cFFF48CBAAllyïa-Man
 L["Please report any bugs or request features on our issue board:"] = true
 
 L["|cFFFFFF00Abandoned quest %s|r"] = true
+L["|cFFFFFF00You can't abandon %s|r"] = true
 
 L["Skipping '%s' since it is excluded from group abandons"] = true
 L["Excluding quest '%s' from group abandons"] = true
