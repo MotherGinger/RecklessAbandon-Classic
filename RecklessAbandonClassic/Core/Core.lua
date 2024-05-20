@@ -72,7 +72,7 @@ E.isRetail = WOW_PROJECT_ID == (WOW_PROJECT_MAINLINE or 1)
 E.isClassic = WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2)
 E.isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5)
 E.isWrath = WOW_PROJECT_ID == (WOW_PROJECT_WRATH_CLASSIC or 11)
-E.isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATACLYSM_CLASSIC or 12) --TODO
+E.isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format("%dx%d", E.screenwidth, E.screenheight)
 E.wowVersionMatrix = {
@@ -80,7 +80,7 @@ E.wowVersionMatrix = {
 	[WOW_PROJECT_CLASSIC] = "Classic Era",
 	[WOW_PROJECT_BURNING_CRUSADE_CLASSIC] = "Burning Crusade Classic",
 	[WOW_PROJECT_WRATH_CLASSIC] = "Wrath of the Lich King Classic",
-	[WOW_PROJECT_CATACLYSM_CLASSIC] = "Cataclysm Classic" -- TODO
+	[WOW_PROJECT_CATACLYSM_CLASSIC] = "Cataclysm Classic"
 }
 E.logLevels = {
 	[LOG_LEVEL_ERROR] = L["Only show messages for errors"],
@@ -776,7 +776,7 @@ function E:PrintWelcomeMessage()
 	end
 
 	if not E.isCata then
-		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], E.wowVersionMatrix[WOW_PROJECT_CATACLYSM_CLASSIC or 12], E.wowVersionMatrix[WOW_PROJECT_ID]))
+		self:Critical(format(L["You have installed a version of this addon intended for |cFFFFFAB8%s|r, however you are currently playing |cFFFFFAB8%s|r. You may encounter serious issues with this setup. Please install the proper version from Github, CurseForge, or WoWInterface, and restart the game."], E.wowVersionMatrix[WOW_PROJECT_CATACLYSM_CLASSIC or 14], E.wowVersionMatrix[WOW_PROJECT_ID]))
 	end
 end
 
