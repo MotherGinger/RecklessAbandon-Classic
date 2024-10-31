@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v3.0.2 - 2024-10-30
+  - Changed
+    - Bump TOC for 4.4.1 (Cataclysm Classic)
+
 - v3.0.1 - 2024-05-20
   - Fixed
     - WoW project ID for cataclysm
@@ -172,6 +176,7 @@ This project adheres to Semantic Versioning.
     - Documentation
 
 [unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v3.0.1-cata...cata
+[v3.0.2]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v3.0.1-cata...v3.0.2-cata
 [v3.0.1]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v3.0.0-cata...v3.0.1-cata
 [v3.0.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.1.0-wrath...v3.0.0-cata
 [v2.1.0]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v2.0.6-wrath...v2.1.0-wrath
