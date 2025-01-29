@@ -4,6 +4,10 @@ This project adheres to Semantic Versioning.
 
 - Unreleased
 
+- v1.5.6 - 2025-01-28
+  - Changed
+    - Bump TOC for 1.15.6
+
 - v1.5.5 - 2024-11-19
   - Changed
     - Bump TOC for 1.15.5
@@ -170,7 +174,8 @@ This project adheres to Semantic Versioning.
     - Profile support
     - Documentation
 
-[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.5-classic...classic
+[unreleased]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.6-classic...classic
+[v1.5.6]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.5-classic...v1.5.6-classic
 [v1.5.5]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.4-classic...v1.5.5-classic
 [v1.5.4]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.3-classic...v1.5.4-classic
 [v1.5.3]: https://github.com/MotherGinger/RecklessAbandon-Classic/compare/v1.5.2-classic...v1.5.3-classic
