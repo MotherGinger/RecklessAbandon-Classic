@@ -1,5 +1,10 @@
 # Reckless Abandon Classic
 
+> ## ⚠️ This project has been consolidated into the main [Reckless Abandon project](https://github.com/MotherGinger/RecklessAbandon) 
+> As of [Reckless Abandon v3.0.0](https://github.com/MotherGinger/RecklessAbandon/releases/tag/v3.0.0), classic versions are now supported by default. You no longer need a seperate classic version.
+>
+> This project will no longer be updated!
+
 A WoW Classic addon that lets you quickly (and _recklessly_) abandon quests.
 
 # Current Features
